@@ -9,6 +9,7 @@ module.exports = {
     WORKSPACE_USER_PLUGIN: "WorkspaceUser",
     CHAT_PLUGIN: "Chat",
     LLM_PLUGIN: "LLM",
+    TABLE_PLUGIN: "Table",
     WEB_ASSISTANT_PLUGIN: "WebAssistant",
     FFMPEG_PLUGIN: "Ffmpeg",
     GLOBAL_SERVERLESS_ID: "assistOS",

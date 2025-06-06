@@ -251,7 +251,14 @@ async function getCustomTypes(spaceId) {
     let client = await this.getClient(constants.WORKSPACE_PLUGIN, spaceId);
     return await client.getCustomTypes();
 }
-
+async function insertTableRow(spaceId, docId, varName, row, position) {
+    let client = await this.getClient(constants.TABLE_PLUGIN, spaceId);
+    return await client.insert(docId, varName, row, position);
+}
+async function updateTableRow(spaceId, docId, varName, row) {
+    let client = await this.getClient(constants.TABLE_PLUGIN, spaceId);
+    return await client.updateRow(docId, varName, row);
+}
 module.exports = {
     getClient,
     createSpace,
@@ -302,7 +309,9 @@ module.exports = {
     buildForDocument,
     restartServerless,
     getCommands,
-    getCustomTypes
+    getCustomTypes,
+    insertTableRow,
+    updateTableRow
 }
 
 
