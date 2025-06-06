@@ -71,18 +71,24 @@ async function removeCollaborator(spaceId, email) {
 async function addCollaborators(referrerEmail, spaceId, collaborators, spaceName) {
     let client = await this.getClient(constants.WORKSPACE_PLUGIN, spaceId);
     let userEmails = collaborators.map(user => user.email);
-    let userLoginClient =  await this.getClient(constants.USER_LOGIN_PLUGIN);
-    for(let email of userEmails){
-        let userModule = require("assistos").loadModule("user", this.__securityContext);
-        let result = await userModule.userExists(email);
-        if(!result.account_exists){
-            let name = email.split("@")[0];
-            await userLoginClient.createUser(email, name);
-            await this.createSpace(name, email);
+    let userModule = require("assistos").loadModule("user", this.__securityContext);
+
+    const validEmails = [];
+    for (let index = 0; index < userEmails.length; index++) {
+        const email = userEmails[index];
+        let result = await userModule.getPublicAuthInfo(email);
+        if (!result || !result.userExists) {
+            assistOS.showToast(`Failed to invite ${email} to space. User doesn't have an account!`, "error", 3000);
+        } else {
+            validEmails.push(email);
         }
     }
-    await client.addSpaceToUsers(userEmails, spaceId);
+    if (validEmails.length === 0) {
+        return [];
+    }
 
+    const appSpecificClient = await this.getClient(constants.APP_SPECIFIC_PLUGIN);
+    await appSpecificClient.addSpaceToUsers(validEmails, spaceId);
     return await client.addCollaborators(referrerEmail, collaborators, spaceId, spaceName);
 }
 
@@ -141,7 +147,7 @@ async function getVideo(videoId, range) {
 }
 
 async function getFile(fileId, type, range) {
-    const downloadData = await this.sendRequest(`/spaces/downloads/${fileId}`, "GET", null , {"Content-Type": type});
+    const downloadData = await this.sendRequest(`/spaces/downloads/${fileId}`, "GET", null, {"Content-Type": type});
 
     let headers = {};
     if (range) {
@@ -164,7 +170,10 @@ async function putVideo(video) {
 
 async function putFile(file, type) {
     const uploadData = await this.sendRequest(`/spaces/uploads`, "GET", null, {"Content-Type": type});
-    await this.sendRequest(uploadData.uploadURL, "PUT", file, {"Content-Type": type, "Content-Length": file.byteLength}, uploadData.externalRequest);
+    await this.sendRequest(uploadData.uploadURL, "PUT", file, {
+        "Content-Type": type,
+        "Content-Length": file.byteLength
+    }, uploadData.externalRequest);
     return uploadData.fileId;
 }
 
@@ -184,14 +193,13 @@ async function deleteFile(fileId, type) {
     return await this.sendRequest(`/spaces/files/${fileId}`, "DELETE", null, {"Content-Type": type});
 }
 
-async function startTelegramBot(spaceId, personalityId, botId){
+async function startTelegramBot(spaceId, personalityId, botId) {
     return await this.sendRequest(`/telegram/startBot/${spaceId}/${personalityId}`, "POST", botId);
 }
 
-async function removeTelegramUser(spaceId, personalityId, telegramUserId){
+async function removeTelegramUser(spaceId, personalityId, telegramUserId) {
     return await this.sendRequest(`/telegram/auth/${spaceId}/${personalityId}`, "PUT", telegramUserId);
 }
-
 
 
 async function runCode(spaceId, commands, args) {
@@ -199,37 +207,46 @@ async function runCode(spaceId, commands, args) {
     await client.runCode(commands, ...args);
     await client.buildAll();
 }
+
 async function buildAll(spaceId) {
     let client = await this.getClient(constants.WORKSPACE_PLUGIN, spaceId);
     await client.buildAll();
 }
+
 async function getGraph(spaceId) {
     let client = await this.getClient(constants.WORKSPACE_PLUGIN, spaceId);
     return await client.getGraph();
 }
+
 async function getVariables(spaceId) {
     let client = await this.getClient(constants.WORKSPACE_PLUGIN, spaceId);
     return await client.getEveryVariableObject();
 }
+
 async function getErrorsFromLastBuild(spaceId) {
     let client = await this.getClient(constants.WORKSPACE_PLUGIN, spaceId);
     return await client.getErrorFromLastBuild();
 }
+
 async function defineVariable(spaceId, name, type, documentId, chapterId, paragraphId, command) {
     let client = await this.getClient(constants.WORKSPACE_PLUGIN, spaceId);
     return await client.defineVariable(name, type, documentId, chapterId, paragraphId, command);
 }
+
 async function buildForDocument(spaceId, documentId) {
     let client = await this.getClient(constants.WORKSPACE_PLUGIN, spaceId);
     return await client.buildOnlyForDocument(documentId);
 }
+
 async function restartServerless(spaceId) {
     return await this.sendRequest(`/spaces/${spaceId}/restart`, "PUT", {});
 }
+
 async function getCommands(spaceId) {
     let client = await this.getClient(constants.WORKSPACE_PLUGIN, spaceId);
     return await client.getCommands();
 }
+
 async function getCustomTypes(spaceId) {
     let client = await this.getClient(constants.WORKSPACE_PLUGIN, spaceId);
     return await client.getCustomTypes();
