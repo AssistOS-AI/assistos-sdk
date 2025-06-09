@@ -21,8 +21,9 @@ async function request(url, method = "GET", data, securityContext, headers = {},
     }
     if (envType === constants.ENV_TYPE.NODE && !externalRequest) {
         url = `${process.env.BASE_URL}${url}`;
-        init.headers.Cookie = securityContext.cookies;
-        init.headers["x-api-key"] = process.env.SSO_SECRETS_ENCRYPTION_KEY;
+        if(securityContext.cookies){
+            init.headers.Cookie = securityContext.cookies;
+        }
     }
     let response;
     try {
