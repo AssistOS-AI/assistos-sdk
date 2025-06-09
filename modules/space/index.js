@@ -259,6 +259,10 @@ async function updateTableRow(spaceId, docId, varName, row) {
     let client = await this.getClient(constants.TABLE_PLUGIN, spaceId);
     return await client.updateRow(docId, varName, row);
 }
+async function deleteTableRow(spaceId, docId, varName, rowId) {
+    let client = await this.getClient(constants.TABLE_PLUGIN, spaceId);
+    return await client.deleteRow(docId, varName, rowId);
+}
 module.exports = {
     getClient,
     createSpace,
@@ -311,7 +315,8 @@ module.exports = {
     getCommands,
     getCustomTypes,
     insertTableRow,
-    updateTableRow
+    updateTableRow,
+    deleteTableRow
 }
 
 
