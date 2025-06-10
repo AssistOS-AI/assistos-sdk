@@ -15,6 +15,7 @@ async function getWidgets(spaceId) {
      return await getAPIClient(this.__securityContext.userId, pluginName, serverlessId, {
          email: this.__securityContext.email,
          authToken: this.__securityContext.authToken,
+         sessionId: this.__securityContext.sessionId
      })
 }
 
