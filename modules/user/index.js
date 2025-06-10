@@ -10,11 +10,13 @@ async function loadUser(email) {
         url += `?email=${encodeURIComponent(email)}`;
     }
     let userInfo = await this.sendRequest(url, "GET");
+    const isFounder = await this.sendRequest("/spaces/isFounder", "GET");
     return {
         email: email,
         currentSpaceId: userInfo.currentSpaceId,
         spaces: userInfo.spaces,
-        imageId: userInfo.imageId
+        imageId: userInfo.imageId,
+        isFounder: isFounder
     }
 }
 
