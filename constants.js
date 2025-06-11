@@ -1,8 +1,9 @@
 module.exports = {
     DEFAULT_AGENT: "Assistant",
     USER_LOGIN_PLUGIN: "UserLogin",
-    APPLICATION_PLUGIN: "Application",
+    USER_LOGGER_PLUGIN: "UserLoggerPlugin",
     ADMIN_PLUGIN: "AdminPlugin",
+    APPLICATION_PLUGIN: "Application",
     ASSISTOS_ADMIN_PLUGIN: "AssistOSAdmin",
     AGENT_PLUGIN: "Agent",
     WORKSPACE_PLUGIN: "Workspace",

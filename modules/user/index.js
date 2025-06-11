@@ -1,9 +1,15 @@
 const {request} = require("../util");
+const {getAPIClient} = require("../util/utils");
+const constants = require("../../constants");
 
 async function sendRequest(url, method, data, headers) {
     return await request(url, method, data, this.__securityContext, headers);
 }
-
+async function getClient(pluginName, spaceId) {
+    return await getAPIClient(this.__securityContext.userId, pluginName, spaceId, {
+        email: this.__securityContext.email
+    })
+}
 async function loadUser(email) {
     let url = "/auth/getInfo"
     if (email) {
@@ -108,7 +114,10 @@ async function deletePasskey(email, credentialId) {
 async function deleteTotp(email) {
     return await this.sendRequest(`/auth/deleteTotp/${encodeURIComponent(email)}`, 'DELETE');
 }
-
+async function getUserLogs(email) {
+    let client = await this.getClient(constants.USER_LOGGER_PLUGIN);
+    return await client.getUserLogs(email);
+}
 module.exports = {
     loadUser,
     sendRequest,
@@ -128,5 +137,7 @@ module.exports = {
     generatePasskeyLoginOptions,
     addPasskey,
     deletePasskey,
-    deleteTotp
+    deleteTotp,
+    getClient,
+    getUserLogs
 }
