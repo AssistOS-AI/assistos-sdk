@@ -63,9 +63,10 @@ async function getCollaborators(spaceId) {
 }
 
 async function removeCollaborator(spaceId, email) {
-    let client = await this.getClient(constants.WORKSPACE_PLUGIN, spaceId);
-    await client.unlinkSpaceFromUser(email, spaceId);
-    return await client.removeCollaborator(email);
+    let adminClient = await this.getClient(constants.ASSISTOS_ADMIN_PLUGIN);
+    await adminClient.unlinkSpaceFromUser(email, spaceId);
+    let localClient = await this.getClient(constants.WORKSPACE_PLUGIN, spaceId);
+    return await localClient.removeCollaborator(email);
 }
 
 async function addCollaborators(referrerEmail, spaceId, collaborators, spaceName) {
@@ -87,8 +88,8 @@ async function addCollaborators(referrerEmail, spaceId, collaborators, spaceName
         return [];
     }
 
-    const appSpecificClient = await this.getClient(constants.APP_SPECIFIC_PLUGIN);
-    await appSpecificClient.addSpaceToUsers(validEmails, spaceId);
+    const adminClient = await this.getClient(constants.ASSISTOS_ADMIN_PLUGIN);
+    await adminClient.addSpaceToUsers(validEmails, spaceId);
     return await client.addCollaborators(referrerEmail, collaborators, spaceId, spaceName);
 }
 
