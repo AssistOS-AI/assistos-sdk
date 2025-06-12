@@ -118,6 +118,14 @@ async function getUserLogs(email) {
     let client = await this.getClient(constants.USER_LOGGER_PLUGIN);
     return await client.getUserLogs(email);
 }
+async function getAllUsers() {
+    let client = await this.getClient(constants.ADMIN_PLUGIN);
+    return await client.getAllUsers();
+}
+async function setUserRole(email, role) {
+    let client = await this.getClient(constants.ADMIN_PLUGIN);
+    return await client.setUserRole(email, role);
+}
 module.exports = {
     loadUser,
     sendRequest,
@@ -139,5 +147,7 @@ module.exports = {
     deletePasskey,
     deleteTotp,
     getClient,
-    getUserLogs
+    getUserLogs,
+    getAllUsers,
+    setUserRole
 }
