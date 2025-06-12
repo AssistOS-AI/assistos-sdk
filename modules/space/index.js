@@ -264,6 +264,11 @@ async function deleteTableRow(spaceId, docId, varName, rowId) {
     let client = await this.getClient(constants.TABLE_PLUGIN, spaceId);
     return await client.deleteRow(docId, varName, rowId);
 }
+
+async function getMatchingUsersOrSpaces(input) {
+    let client = await this.getClient(constants.ASSISTOS_ADMIN_PLUGIN);
+    return await client.getMatchingUsersOrSpaces(input);
+}
 module.exports = {
     getClient,
     createSpace,
@@ -317,7 +322,8 @@ module.exports = {
     getCustomTypes,
     insertTableRow,
     updateTableRow,
-    deleteTableRow
+    deleteTableRow,
+    getMatchingUsersOrSpaces
 }
 
 
