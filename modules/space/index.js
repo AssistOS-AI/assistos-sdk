@@ -269,6 +269,33 @@ async function getMatchingUsersOrSpaces(input) {
     let client = await this.getClient(constants.ASSISTOS_ADMIN_PLUGIN);
     return await client.getMatchingUsersOrSpaces(input);
 }
+async function getSpaces(offset, limit) {
+    let client = await this.getClient(constants.ASSISTOS_ADMIN_PLUGIN);
+    let spaces = await client.getSpaces(offset, limit);
+    let spacesDetails = [];
+    for (let space of spaces) {
+        let spaceClient = await this.getClient(constants.WORKSPACE_PLUGIN, space.id);
+        let workspace = await spaceClient.getWorkspaceInfo(space.id);
+        workspace.name = space.name;
+        spacesDetails.push(workspace);
+    }
+    return spacesDetails;
+}
+async function getSpacesCount(){
+    let client = await this.getClient(constants.ASSISTOS_ADMIN_PLUGIN);
+    return await client.getSpacesCount();
+}
+async function getAllDocumentsCount(){
+    let client = await this.getClient(constants.ASSISTOS_ADMIN_PLUGIN);
+    let spaceIds = await client.listAllSpaces();
+    let documentsCount = 0;
+    for(let spaceId of spaceIds){
+        let spaceClient = await this.getClient(constants.DOCUMENTS_PLUGIN, spaceId);
+        let documents = await spaceClient.getAllDocuments();
+        documentsCount += documents.length;
+    }
+    return documentsCount;
+}
 module.exports = {
     getClient,
     createSpace,
@@ -323,7 +350,10 @@ module.exports = {
     insertTableRow,
     updateTableRow,
     deleteTableRow,
-    getMatchingUsersOrSpaces
+    getMatchingUsersOrSpaces,
+    getSpaces,
+    getSpacesCount,
+    getAllDocumentsCount
 }
 
 
