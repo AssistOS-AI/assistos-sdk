@@ -16,14 +16,19 @@ async function loadUser(email) {
         url += `?email=${encodeURIComponent(email)}`;
     }
     let userInfo = await this.sendRequest(url, "GET");
-    const isFounder = await this.sendRequest("/spaces/isFounder", "GET");
+    let client = await this.getClient(constants.ADMIN_PLUGIN);
+    let role = await client.getUserRole(userInfo.email);
     return {
-        email: email,
+        email: userInfo.email,
         currentSpaceId: userInfo.currentSpaceId,
         spaces: userInfo.spaces,
         imageId: userInfo.imageId,
-        isFounder: isFounder
+        role: role
     }
+}
+async function getGlobalRoles() {
+    let client = await this.getClient(constants.ADMIN_PLUGIN);
+    return await client.getRoles();
 }
 
 async function listUserSpaces(email) {
@@ -142,6 +147,10 @@ async function deleteUser(email) {
     let client = await this.getClient(constants.ADMIN_PLUGIN);
     return await client.deleteUser(email);
 }
+async function getMatchingUsers(input) {
+    let client = await this.getClient(constants.ADMIN_PLUGIN);
+    return await client.getMatchingUsers(input);
+}
 module.exports = {
     loadUser,
     sendRequest,
@@ -169,5 +178,7 @@ module.exports = {
     setUserRole,
     blockUser,
     unblockUser,
-    deleteUser
+    deleteUser,
+    getGlobalRoles,
+    getMatchingUsers
 }
