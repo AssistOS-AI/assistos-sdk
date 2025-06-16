@@ -130,6 +130,18 @@ async function setUserRole(email, role) {
     let client = await this.getClient(constants.ADMIN_PLUGIN);
     return await client.setUserRole(email, role);
 }
+async function blockUser(email) {
+    let client = await this.getClient(constants.ADMIN_PLUGIN);
+    return await client.blockUser(email);
+}
+async function unblockUser(email) {
+    let client = await this.getClient(constants.ADMIN_PLUGIN);
+    return await client.unblockUser(email);
+}
+async function deleteUser(email) {
+    let client = await this.getClient(constants.ADMIN_PLUGIN);
+    return await client.deleteUser(email);
+}
 module.exports = {
     loadUser,
     sendRequest,
@@ -154,5 +166,8 @@ module.exports = {
     getUserLogs,
     getUsers,
     getUsersCount,
-    setUserRole
+    setUserRole,
+    blockUser,
+    unblockUser,
+    deleteUser
 }

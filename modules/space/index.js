@@ -267,7 +267,15 @@ async function deleteTableRow(spaceId, docId, varName, rowId) {
 
 async function getMatchingUsersOrSpaces(input) {
     let client = await this.getClient(constants.ASSISTOS_ADMIN_PLUGIN);
-    return await client.getMatchingUsersOrSpaces(input);
+    let {spaces, users} =  await client.getMatchingUsersOrSpaces(input);
+    let spacesDetails = [];
+    for(let space of spaces) {
+        let spaceClient = await this.getClient(constants.WORKSPACE_PLUGIN, space.id);
+        let workspace = await spaceClient.getWorkspaceInfo(space.id);
+        workspace.name = space.name;
+        spacesDetails.push(workspace);
+    }
+    return {spaces: spacesDetails, users: users};
 }
 async function getSpaces(offset, limit) {
     let client = await this.getClient(constants.ASSISTOS_ADMIN_PLUGIN);
