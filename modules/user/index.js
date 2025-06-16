@@ -151,6 +151,26 @@ async function getMatchingUsers(input) {
     let client = await this.getClient(constants.ADMIN_PLUGIN);
     return await client.getMatchingUsers(input);
 }
+async function createTicket(email, subject, message) {
+    let client = await this.getClient(constants.ADMIN_PLUGIN);
+    return await client.createTicket(email, subject, message);
+}
+async function resolveTicket(ticketId, resolutionMessage) {
+    let client = await this.getClient(constants.ADMIN_PLUGIN);
+    return await client.resolveTicket(ticketId, resolutionMessage);
+}
+async function getTicketsCount() {
+    let client = await this.getClient(constants.ADMIN_PLUGIN);
+    return await client.getTicketsCount();
+}
+async function getTickets(offset, limit) {
+    let client = await this.getClient(constants.ADMIN_PLUGIN);
+    return await client.getTickets(offset, limit);
+}
+async function getUnresolvedTicketsCount() {
+    let client = await this.getClient(constants.ADMIN_PLUGIN);
+    return await client.getUnresolvedTicketsCount();
+}
 module.exports = {
     loadUser,
     sendRequest,
@@ -180,5 +200,10 @@ module.exports = {
     unblockUser,
     deleteUser,
     getGlobalRoles,
-    getMatchingUsers
+    getMatchingUsers,
+    createTicket,
+    resolveTicket,
+    getTicketsCount,
+    getTickets,
+    getUnresolvedTicketsCount
 }
