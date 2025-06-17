@@ -171,6 +171,10 @@ async function getUnresolvedTicketsCount() {
     let client = await this.getClient(constants.ADMIN_PLUGIN);
     return await client.getUnresolvedTicketsCount();
 }
+async function getUserTickets(email) {
+    let client = await this.getClient(constants.ADMIN_PLUGIN);
+    return await client.getUserTickets(email);
+}
 module.exports = {
     loadUser,
     sendRequest,
@@ -205,5 +209,6 @@ module.exports = {
     resolveTicket,
     getTicketsCount,
     getTickets,
-    getUnresolvedTicketsCount
+    getUnresolvedTicketsCount,
+    getUserTickets
 }
