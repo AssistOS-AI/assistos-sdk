@@ -23,7 +23,8 @@ async function loadUser(email) {
         currentSpaceId: userInfo.currentSpaceId,
         spaces: userInfo.spaces,
         imageId: userInfo.imageId,
-        role: role
+        role: role,
+        id: userInfo.globalUserId,
     }
 }
 async function getGlobalRoles() {
