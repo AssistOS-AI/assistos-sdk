@@ -64,7 +64,7 @@ async function getCollaborators(spaceId) {
 
 async function removeCollaborator(referrerEmail, spaceId, email) {
     let adminClient = await this.getClient(constants.ASSISTOS_ADMIN_PLUGIN);
-    await adminClient.unlinkSpaceFromUser(email, spaceId);
+    await adminClient.unlinkSpaceFromUser(referrerEmail, email, spaceId);
     let localClient = await this.getClient(constants.WORKSPACE_PLUGIN, spaceId);
     return await localClient.removeCollaborator(email);
 }
