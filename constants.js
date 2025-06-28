@@ -4,6 +4,7 @@ module.exports = {
     USER_LOGGER_PLUGIN: "UserLoggerPlugin",
     ADMIN_PLUGIN: "AdminPlugin",
     ASSISTOS_ADMIN_PLUGIN: "AssistOSAdmin",
+    PROCESS_PLUGIN: "Process",
     APPLICATION_PLUGIN: "Application",
     AGENT_PLUGIN: "Agent",
     WORKSPACE_PLUGIN: "Workspace",
