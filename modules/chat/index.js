@@ -1,5 +1,6 @@
-const { getAPIClient } = require("../util/utils");
-const { CHAT_PLUGIN } = require("../../constants");
+const {getAPIClient} = require("../util/utils");
+const {CHAT_PLUGIN} = require("../../constants");
+
 async function getClient(pluginName, spaceId) {
     return await getAPIClient(this.__securityContext.userId, pluginName, spaceId, {
         email: this.__securityContext.email
@@ -11,10 +12,16 @@ async function getChat(spaceId, chatId) {
     return await client.getChat(chatId);
 }
 
+async function getChats(spaceId) {
+    const client = await this.getClient(CHAT_PLUGIN, spaceId);
+    return await client.getChats();
+}
+
 async function getChatMessages(spaceId, chatId) {
     const client = await this.getClient(CHAT_PLUGIN, spaceId);
     return await client.getChatMessages(chatId);
 }
+
 async function getChatMessage(spaceId, chatId, messageId) {
     const client = await this.getClient(CHAT_PLUGIN, spaceId);
     return await client.getChatMessage(chatId, messageId);
@@ -25,9 +32,9 @@ async function getChatContext(spaceId, chatId) {
     return await client.getChatContext(chatId);
 }
 
-async function createChat(spaceId, personalityId) {
+async function createChat(spaceId, name, processId,...args) {
     const client = await this.getClient(CHAT_PLUGIN, spaceId);
-    return await client.createChat(personalityId);
+    return await client.createChat(name,processId,args);
 }
 
 async function deleteChat(spaceId, chatId) {
@@ -92,6 +99,7 @@ async function sendQueryStreaming(spaceId, chatId, personalityId, userId, prompt
 
 module.exports = {
     getChat,
+    getChats,
     getChatMessages,
     getChatContext,
     createChat,
