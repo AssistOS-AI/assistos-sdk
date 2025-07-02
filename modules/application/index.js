@@ -18,6 +18,18 @@ async function getWidgets(spaceId) {
          sessionId: this.__securityContext.sessionId
      })
 }
+async function installSystemApp(appName){
+    let client = await this.getClient(constants.ASSISTOS_ADMIN_PLUGIN);
+    return await client.installSystemApp(appName);
+}
+async function updateSystemApp(appName) {
+    let client = await this.getClient(constants.ASSISTOS_ADMIN_PLUGIN);
+    return await client.updateApplication(appName);
+}
+async function requiresUpdateSystemApp(appName) {
+    let client = await this.getClient(constants.ASSISTOS_ADMIN_PLUGIN);
+    return await client.requiresUpdate(appName);
+}
 
 async function installApplication(spaceId, applicationId) {
     let client = await this.getClient(constants.APPLICATION_PLUGIN, spaceId);
@@ -52,11 +64,6 @@ async function getAvailableApps(spaceId) {
 async function getApplications(spaceId) {
     let client = await this.getClient(constants.APPLICATION_PLUGIN, spaceId);
     return await client.getApplications();
-}
-
-async function runApplicationTask(spaceId, applicationId, taskName, taskData) {
-    let client = await this.getClient(constants.APPLICATION_PLUGIN, spaceId);
-    return await client.runApplicationTask(taskName, taskData);
 }
 
 async function updateApplication(spaceId, applicationId) {
@@ -114,10 +121,12 @@ module.exports = {
     getApplicationConfig,
     getApplicationFile,
     sendRequest,
-    runApplicationTask,
     updateApplication,
     requiresUpdate,
     getApplicationTasks,
     getApplicationsPlugins,
-    getApplications
+    getApplications,
+    installSystemApp,
+    updateSystemApp,
+    requiresUpdateSystemApp
 };
