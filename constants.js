@@ -11,6 +11,7 @@ module.exports = {
     DOCUMENTS_PLUGIN: "Documents",
     WORKSPACE_USER_PLUGIN: "WorkspaceUser",
     CHAT_PLUGIN: "Chat",
+    CHAT_SCRIPT_PLUGIN: "ChatScript",
     LLM_PLUGIN: "LLM",
     TABLE_PLUGIN: "Table",
     WEB_ASSISTANT_PLUGIN: "WebAssistant",
