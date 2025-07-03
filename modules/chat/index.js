@@ -87,11 +87,14 @@ async function sendMessage(spaceId, chatId, userId, message, role) {
     return await client.sendMessage(chatId, userId, message, role);
 }
 
-async function sendQuery(spaceId, chatId, personalityId, userId, prompt) {
+async function chatInput(spaceId, chatId, agentName, message) {
     const client = await this.getClient(CHAT_PLUGIN, spaceId);
-    return await client.sendQuery(chatId, personalityId, userId, prompt);
+    return await client.chatInput(chatId, agentName, message);
 }
-
+async function waitMessage(spaceId, chatId) {
+    const client = await this.getClient(CHAT_PLUGIN, spaceId);
+    return await client.waitMessage(chatId);
+}
 async function sendQueryStreaming(spaceId, chatId, personalityId, userId, prompt) {
     const client = await this.getClient(CHAT_PLUGIN, spaceId);
     return await client.sendQueryStreaming(chatId, personalityId, userId, prompt);
@@ -114,7 +117,8 @@ module.exports = {
     updateChatContextItem,
     sendMessage,
     getChatMessage,
-    sendQuery,
+    chatInput,
+    waitMessage,
     sendQueryStreaming,
     getClient
 };
