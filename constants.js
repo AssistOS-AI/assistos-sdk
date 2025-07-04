@@ -17,6 +17,7 @@ module.exports = {
     WEB_ASSISTANT_PLUGIN: "WebAssistant",
     FFMPEG_PLUGIN: "Ffmpeg",
     GLOBAL_SERVERLESS_ID: "assistOS",
+    TICKETS_PLUGIN: "TicketsPlugin",
     DOCUMENT_CATEGORIES: {
         SNAPSHOT: 'snapshot',
         DOCUMENT: 'document',

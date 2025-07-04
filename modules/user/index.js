@@ -153,29 +153,34 @@ async function getMatchingUsers(input) {
     return await client.getMatchingUsers(input);
 }
 async function createTicket(email, subject, message) {
-    let client = await this.getClient(constants.ADMIN_PLUGIN);
+    let client = await this.getClient(constants.TICKETS_PLUGIN);
     return await client.createTicket(email, subject, message);
 }
 async function resolveTicket(ticketId, resolutionMessage) {
-    let client = await this.getClient(constants.ADMIN_PLUGIN);
+    let client = await this.getClient(constants.TICKETS_PLUGIN);
     return await client.resolveTicket(ticketId, resolutionMessage);
 }
 async function getTicketsCount() {
-    let client = await this.getClient(constants.ADMIN_PLUGIN);
+    let client = await this.getClient(constants.TICKETS_PLUGIN);
     return await client.getTicketsCount();
 }
 async function getTickets(offset, limit) {
-    let client = await this.getClient(constants.ADMIN_PLUGIN);
+    let client = await this.getClient(constants.TICKETS_PLUGIN);
     return await client.getTickets(offset, limit);
 }
 async function getUnresolvedTicketsCount() {
-    let client = await this.getClient(constants.ADMIN_PLUGIN);
+    let client = await this.getClient(constants.TICKETS_PLUGIN);
     return await client.getUnresolvedTicketsCount();
 }
 async function getUserTickets(email) {
-    let client = await this.getClient(constants.ADMIN_PLUGIN);
+    let client = await this.getClient(constants.TICKETS_PLUGIN);
     return await client.getUserTickets(email);
 }
+async function getOwnTickets(email) {
+    let client = await this.getClient(constants.TICKETS_PLUGIN);
+    return await client.getOwnTickets(email);
+}
+
 module.exports = {
     loadUser,
     sendRequest,
@@ -210,6 +215,7 @@ module.exports = {
     resolveTicket,
     getTicketsCount,
     getTickets,
+    getOwnTickets,
     getUnresolvedTicketsCount,
     getUserTickets
 }
