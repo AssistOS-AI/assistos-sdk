@@ -91,9 +91,12 @@ async function chatInput(spaceId, chatId, agentName, message) {
     const client = await this.getClient(CHAT_PLUGIN, spaceId);
     return await client.chatInput(chatId, agentName, message);
 }
-async function listenForMessages(spaceId, chatId) {
-    const client = await this.getClient(CHAT_PLUGIN, spaceId);
+function listenForMessages(spaceId, chatId, client) {
     return client.listenForMessages(chatId);
+}
+async function stopListeningForMessages(spaceId, chatId) {
+    const client = await this.getClient(CHAT_PLUGIN, spaceId);
+    return client.stopListeningForMessages(chatId);
 }
 async function sendQueryStreaming(spaceId, chatId, personalityId, userId, prompt) {
     const client = await this.getClient(CHAT_PLUGIN, spaceId);
@@ -120,5 +123,6 @@ module.exports = {
     chatInput,
     listenForMessages,
     sendQueryStreaming,
-    getClient
+    getClient,
+    stopListeningForMessages
 };
