@@ -4,7 +4,8 @@ const constants = require("../../constants");
 
 async function getClient(pluginName, spaceId) {
     return await getAPIClient(this.__securityContext.userId, pluginName, spaceId, {
-        email: this.__securityContext.email
+        email: this.__securityContext.email,
+        sessionId: this.__securityContext.sessionId
     })
 }
 
