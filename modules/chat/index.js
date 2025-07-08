@@ -17,9 +17,9 @@ async function getChats(spaceId) {
     return await client.getChats();
 }
 
-async function getChatMessages(spaceId, chatId) {
+async function getChatHistory(spaceId, chatId) {
     const client = await this.getClient(CHAT_PLUGIN, spaceId);
-    return await client.getChatMessages(chatId);
+    return await client.getChatHistory(chatId);
 }
 
 async function getChatMessage(spaceId, chatId, messageId) {
@@ -106,7 +106,7 @@ async function sendQueryStreaming(spaceId, chatId, personalityId, userId, prompt
 module.exports = {
     getChat,
     getChats,
-    getChatMessages,
+    getChatHistory,
     getChatContext,
     createChat,
     deleteChat,
