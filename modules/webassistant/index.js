@@ -8,118 +8,148 @@ async function getClient(spaceId){
     })
 }
 
-
-const updateWebAssistantConfigurationSettings = async function(spaceId, settings) {
+const getWebAssistant= async function (spaceId) {
     const client = await this.getClient(spaceId);
-    return client.updateWebAssistantConfigurationSettings(settings);
+    return client.getWebAssistant();
+};
+
+const getSettings = async function(spaceId){
+    const client = await this.getClient(spaceId);
+    return client.getSettings();
 }
 
-
-const getWebAssistantThemes = async function (spaceId) {
+const updateSettings = async function(spaceId, settings) {
     const client = await this.getClient(spaceId);
-    return client.getWebChatThemes();
-};
-const getWebChatTheme = async function (spaceId, themeId) {
-    const client = await this.getClient(spaceId);
-    return client.getWebChatTheme(themeId);
-};
-const addWebChatTheme = async function (spaceId, theme) {
-    const client = await this.getClient(spaceId);
-    return client.addWebChatTheme(theme);
-};
-const updateWebChatTheme = async function (spaceId, themeId, theme) {
-    const client = await this.getClient(spaceId);
-    return client.updateWebChatTheme(themeId, theme);
-};
-const deleteWebAssistantTheme = async function (spaceId, themeId) {
-    const client = await this.getClient(spaceId);
-    return client.deleteWebAssistantTheme(themeId);
-};
-
-const getWebChatConfiguration = async function (spaceId) {
-    const client = await this.getClient(spaceId);
-    return client.getWebChatConfiguration();
-};
-const updateWebChatConfiguration = async function (spaceId, settings) {
-    const client = await this.getClient(spaceId);
-    return client.updateWebChatConfiguration(settings);
-};
-const addWebAssistantConfigurationPage = async function (spaceId, page) {
-    const client = await this.getClient(spaceId);
-    return client.addWebAssistantConfigurationPage(page);
-};
-const getWebAssistantConfiguration = async function (spaceId) {
-    const client = await this.getClient(spaceId);
-    return client.getWebAssistantConfiguration();
+    return client.updateSettings(settings);
 }
-const getWebAssistantConfigurationPages = async function (spaceId) {
+
+const getThemes = async function (spaceId) {
     const client = await this.getClient(spaceId);
-    return client.getWebAssistantConfigurationPages();
-};
-const getWebAssistantConfigurationPage = async function (spaceId, pageId) {
-    const client = await this.getClient(spaceId);
-    return client.getWebAssistantConfigurationPage(pageId);
-};
-const updateWebAssistantConfigurationPage = async function (spaceId, pageId, page) {
-    const client = await this.getClient(spaceId);
-    return client.updateWebAssistantConfigurationPage(pageId, page);
-};
-const deleteWebAssistantConfigurationPage = async function (spaceId, pageId) {
-    const client = await this.getClient(spaceId);
-    return client.deleteWebAssistantConfigurationPage(pageId);
-};
-const getWebAssistantHomePage = async function (spaceId) {
-    const client = await this.getClient(spaceId);
-    return client.getWebAssistantHomePage();
+    return client.getThemes();
 };
 
-const getWebAssistantConfigurationPageMenuItem = async function (spaceId, menuItemId) {
+const getTheme = async function (spaceId, themeId) {
     const client = await this.getClient(spaceId);
-    return client.getWebAssistantConfigurationPageMenuItem(menuItemId);
+    return client.getTheme(themeId);
 };
-const getWebAssistantConfigurationPageMenu = async function (spaceId) {
+const addTheme = async function (spaceId, theme) {
     const client = await this.getClient(spaceId);
-    return client.getWebAssistantConfigurationPageMenu();
+    return client.addTheme(theme);
 };
-const addWebAssistantConfigurationPageMenuItem = async function (spaceId, pageId, menuItem) {
+const updateTheme = async function (spaceId, themeId, theme) {
     const client = await this.getClient(spaceId);
-    return client.addWebAssistantConfigurationPageMenuItem(pageId, menuItem);
+    return client.updateTheme(themeId, theme);
 };
-const updateWebAssistantConfigurationPageMenuItem = async function (spaceId,menuItemId, menuItem) {
+const deleteTheme = async function (spaceId, themeId) {
     const client = await this.getClient(spaceId);
-    return client.updateWebAssistantConfigurationPageMenuItem(menuItemId, menuItem);
+    return client.deleteTheme(themeId);
 };
-const deleteWebAssistantConfigurationPageMenuItem = async function (spaceId, pageId, menuItemId) {
+
+
+
+const addPage = async function (spaceId, page) {
     const client = await this.getClient(spaceId);
-    return client.deleteWebAssistantConfigurationPageMenuItem(pageId, menuItemId);
+    return client.addPage(page);
 };
+
+const getPages = async function (spaceId) {
+    const client = await this.getClient(spaceId);
+    return client.getPages();
+};
+const getPage = async function (spaceId, pageId) {
+    const client = await this.getClient(spaceId);
+    return client.getPage(pageId);
+};
+const updatePage = async function (spaceId, pageId, page) {
+    const client = await this.getClient(spaceId);
+    return client.updatePage(pageId, page);
+};
+const deletePage = async function (spaceId, pageId) {
+    const client = await this.getClient(spaceId);
+    return client.deletePage(pageId);
+};
+const getHomePage = async function (spaceId) {
+    const client = await this.getClient(spaceId);
+    return client.getHomePage();
+};
+const getMenuItem = async function (spaceId, menuItemId) {
+    const client = await this.getClient(spaceId);
+    return client.getMenuItem(menuItemId);
+};
+const getMenu = async function (spaceId) {
+    const client = await this.getClient(spaceId);
+    return client.getMenu();
+};
+const addMenuItem = async function (spaceId, menuItem) {
+    const client = await this.getClient(spaceId);
+    return client.addMenuItem(menuItem);
+};
+const updateMenuItem = async function (spaceId,menuItemId, menuItem) {
+    const client = await this.getClient(spaceId);
+    return client.updateMenuItem(menuItemId, menuItem);
+};
+const deleteMenuItem = async function (spaceId, menuItemId) {
+    const client = await this.getClient(spaceId);
+    return client.deleteMenuItem(menuItemId);
+};
+
 
 const getWidget = async function (spaceId, applicationId, widgetName) {
     const client = await this.getClient(spaceId);
     return client.getWidget(applicationId, widgetName);
 };
 
+const getScripts = async function(spaceId){
+    const client = await this.getClient(spaceId);
+    return await client.getScripts();
+}
+
+const getScript = async function (spaceId,scriptId){
+    const client = await this.getClient(spaceId);
+    return await client.getScript(scriptId);
+
+}
+
+const addScript = async function(spaceId,scriptData){
+    const client = await this.getClient(spaceId);
+    return await client.addScript(scriptData);
+
+}
+const updateScript = async function(spaceId,scriptId,scriptData){
+    const client = await this.getClient(spaceId);
+    return await client.updateScript(scriptId,scriptData);
+
+}
+const deleteScript = async function(spaceId,scriptId){
+    const client = await this.getClient(spaceId);
+    return await client.deleteScript(scriptId);
+
+}
 module.exports = {
-    getWebAssistantThemes,
-    updateWebAssistantConfigurationSettings,
-    getWebChatTheme,
-    addWebChatTheme,
-    updateWebChatTheme,
-    deleteWebAssistantTheme,
-    getWebChatConfiguration,
-    updateWebChatConfiguration,
-    addWebAssistantConfigurationPage,
-    getWebAssistantConfigurationPages,
-    getWebAssistantConfigurationPage,
-    updateWebAssistantConfigurationPage,
-    deleteWebAssistantConfigurationPage,
-    getWebAssistantHomePage,
-    getWebAssistantConfiguration,
-    getWebAssistantConfigurationPageMenuItem,
-    getWebAssistantConfigurationPageMenu,
-    addWebAssistantConfigurationPageMenuItem,
-    updateWebAssistantConfigurationPageMenuItem,
-    deleteWebAssistantConfigurationPageMenuItem,
+    getScripts,
+    getScript,
+    addScript,
+    updateScript,
+    deleteScript,
+    getWebAssistant,
+    getThemes,
+    getSettings,
+    updateSettings,
+    getTheme,
+    addTheme,
+    updateTheme,
+    deleteTheme,
+    addPage,
+    getPages,
+    getPage,
+    updatePage,
+    deletePage,
+    getHomePage,
+    getMenuItem,
+    getMenu,
+    addMenuItem,
+    updateMenuItem,
+    deleteMenuItem,
     getWidget,
     getClient
 };
