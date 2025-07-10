@@ -110,18 +110,6 @@ async function getDocumentTasks(spaceId, documentId) {
     return await this.sendRequest(`/tasks/${spaceId}/${documentId}`, "GET");
 }
 
-async function deselectDocumentItem(spaceId, documentId, itemId, selectId) {
-    return await this.sendRequest(`/documents/select/${spaceId}/${documentId}/${itemId}/${selectId}`, "DELETE");
-}
-
-async function getSelectedDocumentItems(spaceId, documentId) {
-    return await this.sendRequest(`/documents/select/${spaceId}/${documentId}`, "GET");
-}
-
-async function selectDocumentItem(spaceId, documentId, itemId, itemData) {
-    return await this.sendRequest(`/documents/select/${spaceId}/${documentId}/${itemId}`, "PUT", itemData);
-}
-
 async function translateDocument(spaceId, documentId, language, personalityId) {
     return await this.sendRequest(`/tasks/translate/${spaceId}/${documentId}`, "POST", {language, personalityId});
 }
@@ -230,9 +218,6 @@ module.exports = {
     getDocumentTasks,
     exportDocument,
     importDocument,
-    deselectDocumentItem,
-    getSelectedDocumentItems,
-    selectDocumentItem,
     exportDocumentAsDocx,
     translateDocument,
     undoOperation,
