@@ -45,8 +45,6 @@ const deleteTheme = async function (spaceId, themeId) {
     return client.deleteTheme(themeId);
 };
 
-
-
 const addPage = async function (spaceId, page) {
     const client = await this.getClient(spaceId);
     return client.addPage(page);
