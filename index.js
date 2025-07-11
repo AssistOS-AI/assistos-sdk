@@ -37,8 +37,6 @@ function _loadModule(moduleName) {
             return require('./modules/notification');
         case 'chat':
             return require('./modules/chat');
-        case 'process':
-            return require('./modules/process');
         case 'webassistant':
             return require('./modules/webassistant');
         default:

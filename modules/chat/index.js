@@ -1,5 +1,6 @@
 const {getAPIClient} = require("../util/utils");
 const {CHAT_PLUGIN} = require("../../constants");
+const constants = require("../../constants");
 
 async function getClient(pluginName, spaceId) {
     return await getAPIClient(this.__securityContext.userId, pluginName, spaceId, {
@@ -22,11 +23,6 @@ async function getChatHistory(spaceId, chatId) {
     return await client.getChatHistory(chatId);
 }
 
-async function getChatMessage(spaceId, chatId, messageId) {
-    const client = await this.getClient(CHAT_PLUGIN, spaceId);
-    return await client.getChatMessage(chatId, messageId);
-}
-
 async function getChatContext(spaceId, chatId) {
     const client = await this.getClient(CHAT_PLUGIN, spaceId);
     return await client.getChatContext(chatId);
@@ -40,11 +36,6 @@ async function createChat(spaceId, name, processId,...args) {
 async function deleteChat(spaceId, chatId) {
     const client = await this.getClient(CHAT_PLUGIN, spaceId);
     return await client.deleteChat(chatId);
-}
-
-async function resetChat(spaceId, chatId) {
-    const client = await this.getClient(CHAT_PLUGIN, spaceId);
-    return await client.resetChat(chatId);
 }
 
 async function resetChatContext(spaceId, chatId) {
@@ -82,11 +73,6 @@ async function updateChatContextItem(spaceId, chatId, contextItemId, contextItem
     return await client.updateChatContextItem(chatId, contextItemId, contextItem);
 }
 
-async function sendMessage(spaceId, chatId, userId, message, role) {
-    const client = await this.getClient(CHAT_PLUGIN, spaceId);
-    return await client.sendMessage(chatId, userId, message, role);
-}
-
 async function chatInput(spaceId, chatId, agentName, message) {
     const client = await this.getClient(CHAT_PLUGIN, spaceId);
     return await client.chatInput(chatId, agentName, message);
@@ -98,11 +84,29 @@ async function stopListeningForMessages(spaceId, chatId) {
     const client = await this.getClient(CHAT_PLUGIN, spaceId);
     return client.stopListeningForMessages(chatId);
 }
-async function sendQueryStreaming(spaceId, chatId, personalityId, userId, prompt) {
-    const client = await this.getClient(CHAT_PLUGIN, spaceId);
-    return await client.sendQueryStreaming(chatId, personalityId, userId, prompt);
-}
 
+/*Chat scripts*/
+async function getChatScripts(spaceId) {
+    let client = await this.getClient(constants.CHAT_SCRIPT_PLUGIN, spaceId);
+    return await client.getChatScripts();
+}
+async function getChatScript(spaceId, name) {
+    let client = await this.getClient(constants.CHAT_SCRIPT_PLUGIN, spaceId);
+    return await client.getChatScript(name);
+}
+async function createChatScript(spaceId, name, code, description) {
+    let client = await this.getClient(constants.CHAT_SCRIPT_PLUGIN, spaceId);
+    return await client.createChatScript(name, code, description);
+}
+async function updateChatScript(spaceId, scriptId, script) {
+    let client = await this.getClient(constants.CHAT_SCRIPT_PLUGIN, spaceId);
+    await client.updateChatScript(scriptId, script);
+    await client.updateChatScriptName(scriptId, script.name);
+}
+async function deleteChatScript(spaceId, scriptId) {
+    let client = await this.getClient(constants.CHAT_SCRIPT_PLUGIN, spaceId);
+    return await client.deleteChatScript(scriptId);
+}
 module.exports = {
     getChat,
     getChats,
@@ -110,7 +114,6 @@ module.exports = {
     getChatContext,
     createChat,
     deleteChat,
-    resetChat,
     resetChatContext,
     resetChatMessages,
     addPreferenceToContext,
@@ -118,11 +121,13 @@ module.exports = {
     addMessageToContext,
     removeMessageFromContext,
     updateChatContextItem,
-    sendMessage,
-    getChatMessage,
     chatInput,
     listenForMessages,
-    sendQueryStreaming,
     getClient,
-    stopListeningForMessages
+    stopListeningForMessages,
+    getChatScripts,
+    getChatScript,
+    createChatScript,
+    updateChatScript,
+    deleteChatScript
 };
