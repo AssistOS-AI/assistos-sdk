@@ -43,7 +43,10 @@ async function exportAgent(spaceId, agentId){
     let client = await this.getClient(constants.AGENT_PLUGIN, spaceId);
     return await client.exportAgent(agentId);
 }
-
+async function getAgentNames(spaceId){
+    let client = await this.getClient(constants.AGENT_PLUGIN, spaceId);
+    return await client.getAgentNames();
+}
 module.exports = {
     exportAgent,
     addAgent,
@@ -52,5 +55,6 @@ module.exports = {
     getAgent,
     getAgents,
     getDefaultAgent,
-    getClient
+    getClient,
+    getAgentNames
 }
