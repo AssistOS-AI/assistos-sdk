@@ -73,9 +73,9 @@ async function updateChatContextItem(spaceId, chatId, contextItemId, contextItem
     return await client.updateChatContextItem(chatId, contextItemId, contextItem);
 }
 
-async function chatInput(spaceId, chatId, agentName, message) {
+async function chatInput(spaceId, chatId, agentName, message, role) {
     const client = await this.getClient(CHAT_PLUGIN, spaceId);
-    return await client.chatInput(chatId, agentName, message);
+    return await client.chatInput(chatId, agentName, message, role);
 }
 function listenForMessages(spaceId, chatId, client) {
     return client.listenForMessages(chatId);
