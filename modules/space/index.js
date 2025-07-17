@@ -46,12 +46,12 @@ async function deleteSecret(spaceId, secretKey) {
     return await this.sendRequest(`/spaces/${spaceId}/secrets/delete`, "PUT", {secretKey});
 }
 
-async function addSecret(spaceId, name, secretKey, value) {
-    return await this.sendRequest(`/spaces/${spaceId}/secrets`, "POST", {name, secretKey, value});
+async function addSecret(spaceId, secretKey, value) {
+    return await this.sendRequest(`/spaces/${spaceId}/secrets`, "POST", {secretKey, value});
 }
 
-async function editSecret(spaceId, name, secretKey, value) {
-    return await this.sendRequest(`/spaces/${spaceId}/secrets`, "PUT", {name, secretKey, value});
+async function editSecret(spaceId, secretKey, value) {
+    return await this.sendRequest(`/spaces/${spaceId}/secrets`, "PUT", {secretKey, value});
 }
 
 async function getSecretsMasked(spaceId) {
