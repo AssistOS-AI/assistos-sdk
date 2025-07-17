@@ -17,6 +17,10 @@ async function getChats(spaceId) {
     const client = await this.getClient(CHAT_PLUGIN, spaceId);
     return await client.getChats();
 }
+async function getUserChats(spaceId, userId) {
+    const client = await this.getClient(CHAT_PLUGIN, spaceId);
+    return await client.getUserChats(userId);
+}
 
 async function getChatHistory(spaceId, chatId) {
     const client = await this.getClient(CHAT_PLUGIN, spaceId);
@@ -31,6 +35,10 @@ async function getChatContext(spaceId, chatId) {
 async function createChat(spaceId, chatId, chatScriptId, args) {
     const client = await this.getClient(CHAT_PLUGIN, spaceId);
     return await client.createChat(chatId, chatScriptId, args);
+}
+async function createUserChat(spaceId,userId, chatScriptId, args) {
+    const client = await this.getClient(CHAT_PLUGIN, spaceId);
+    return await client.createUserChat(chatScriptId, args);
 }
 
 async function deleteChat(spaceId, chatId) {
@@ -116,7 +124,9 @@ module.exports = {
     getChats,
     getChatHistory,
     getChatContext,
+    getUserChats,
     createChat,
+    createUserChat,
     deleteChat,
     resetChatContext,
     resetChatMessages,
