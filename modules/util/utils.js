@@ -9,10 +9,9 @@ async function getAPIClient(userId, pluginName, serverlessId, options = {}){
         options = serverlessId;
         serverlessId = constants.GLOBAL_SERVERLESS_ID;
     }
-    let openDSU = require("opendsu");
-    let system = openDSU.loadAPI("system");
-    const baseURL = system.getBaseURL();
-    return await openDSU.loadAPI("serverless").createServerlessAPIClient(userId, baseURL, serverlessId, pluginName, "", options);
+    const serverless = require("./serverless");
+    const baseURL = serverless.getBaseURL();
+    return await serverless.createServerlessAPIClient(userId, baseURL, serverlessId, pluginName, "", options);
 }
 module.exports = {
     getAPIClient
