@@ -8,119 +8,124 @@ async function getClient(spaceId){
     })
 }
 
-const getWebAssistant= async function (spaceId) {
+const getWebAssistant= async function (spaceId,assistantId) {
     const client = await this.getClient(spaceId);
-    return client.getWebAssistant();
+    return client.getWebAssistant(assistantId);
 };
 
-const getSettings = async function(spaceId){
+const requiresAuth = async function (spaceId,assistantId){
     const client = await this.getClient(spaceId);
-    return client.getSettings();
+    return client.requiresAuth(assistantId);
+}
+const getSettings = async function(spaceId,assistantId){
+    const client = await this.getClient(spaceId);
+    return client.getSettings(assistantId);
 }
 
-const updateSettings = async function(spaceId, settings) {
+const updateSettings = async function(spaceId, assistantId,settings) {
     const client = await this.getClient(spaceId);
-    return client.updateSettings(settings);
+    return client.updateSettings(assistantId,settings);
 }
 
-const getThemes = async function (spaceId) {
+const getThemes = async function (spaceId,assistantId) {
     const client = await this.getClient(spaceId);
-    return client.getThemes();
+    return client.getThemes(assistantId);
 };
 
-const getTheme = async function (spaceId, themeId) {
+const getTheme = async function (spaceId,assistantId, themeId) {
     const client = await this.getClient(spaceId);
-    return client.getTheme(themeId);
-};
-const addTheme = async function (spaceId, theme) {
-    const client = await this.getClient(spaceId);
-    return client.addTheme(theme);
-};
-const updateTheme = async function (spaceId, themeId, theme) {
-    const client = await this.getClient(spaceId);
-    return client.updateTheme(themeId, theme);
-};
-const deleteTheme = async function (spaceId, themeId) {
-    const client = await this.getClient(spaceId);
-    return client.deleteTheme(themeId);
+    return client.getTheme(assistantId,themeId);
 };
 
-const addPage = async function (spaceId, page) {
+const addTheme = async function (spaceId,assistantId, theme) {
     const client = await this.getClient(spaceId);
-    return client.addPage(page);
+    return client.addTheme(assistantId,theme);
 };
 
-const getPages = async function (spaceId) {
+const updateTheme = async function (spaceId,assistantId, themeId, theme) {
     const client = await this.getClient(spaceId);
-    return client.getPages();
+    return client.updateTheme(assistantId,themeId, theme);
 };
-const getPage = async function (spaceId, pageId) {
+const deleteTheme = async function (spaceId,assistantId, themeId) {
     const client = await this.getClient(spaceId);
-    return client.getPage(pageId);
-};
-const updatePage = async function (spaceId, pageId, page) {
-    const client = await this.getClient(spaceId);
-    return client.updatePage(pageId, page);
-};
-const deletePage = async function (spaceId, pageId) {
-    const client = await this.getClient(spaceId);
-    return client.deletePage(pageId);
-};
-const getHomePage = async function (spaceId) {
-    const client = await this.getClient(spaceId);
-    return client.getHomePage();
-};
-const getMenuItem = async function (spaceId, menuItemId) {
-    const client = await this.getClient(spaceId);
-    return client.getMenuItem(menuItemId);
-};
-const getMenu = async function (spaceId) {
-    const client = await this.getClient(spaceId);
-    return client.getMenu();
-};
-const addMenuItem = async function (spaceId, menuItem) {
-    const client = await this.getClient(spaceId);
-    return client.addMenuItem(menuItem);
-};
-const updateMenuItem = async function (spaceId,menuItemId, menuItem) {
-    const client = await this.getClient(spaceId);
-    return client.updateMenuItem(menuItemId, menuItem);
-};
-const deleteMenuItem = async function (spaceId, menuItemId) {
-    const client = await this.getClient(spaceId);
-    return client.deleteMenuItem(menuItemId);
+    return client.deleteTheme(assistantId,themeId);
 };
 
-
-const getWidget = async function (spaceId, applicationId, widgetName) {
+const addPage = async function (spaceId,assistantId, page) {
     const client = await this.getClient(spaceId);
-    return client.getWidget(applicationId, widgetName);
+    return client.addPage(assistantId,page);
 };
 
-const getScripts = async function(spaceId){
+const getPages = async function (spaceId,assistantId) {
     const client = await this.getClient(spaceId);
-    return await client.getScripts();
+    return client.getPages(assistantId);
+};
+const getPage = async function (spaceId,assistantId, pageId) {
+    const client = await this.getClient(spaceId);
+    return client.getPage(assistantId,pageId);
+};
+const updatePage = async function (spaceId,assistantId, pageId, page) {
+    const client = await this.getClient(spaceId);
+    return client.updatePage(assistantId,pageId, page);
+};
+const deletePage = async function (spaceId,assistantId, pageId) {
+    const client = await this.getClient(spaceId);
+    return client.deletePage(assistantId,pageId);
+};
+const getHomePage = async function (spaceId,assistantId) {
+    const client = await this.getClient(spaceId);
+    return client.getHomePage(assistantId);
+};
+const getMenuItem = async function (spaceId,assistantId, menuItemId) {
+    const client = await this.getClient(spaceId);
+    return client.getMenuItem(assistantId,menuItemId);
+};
+const getMenu = async function (spaceId,assistantId) {
+    const client = await this.getClient(spaceId);
+    return client.getMenu(assistantId);
+};
+const addMenuItem = async function (spaceId,assistantId, menuItem) {
+    const client = await this.getClient(spaceId);
+    return client.addMenuItem(assistantId,menuItem);
+};
+const updateMenuItem = async function (spaceId,assistantId,menuItemId, menuItem) {
+    const client = await this.getClient(spaceId);
+    return client.updateMenuItem(assistantId,menuItemId, menuItem);
+};
+const deleteMenuItem = async function (spaceId,assistantId, menuItemId) {
+    const client = await this.getClient(spaceId);
+    return client.deleteMenuItem(assistantId,menuItemId);
+};
+
+const getWidget = async function (spaceId,assistantId, applicationId, widgetName) {
+    const client = await this.getClient(spaceId);
+    return client.getWidget(assistantId,applicationId, widgetName);
+};
+
+const getScripts = async function(spaceId,assistantId){
+    const client = await this.getClient(spaceId);
+    return await client.getScripts(assistantId);
 }
 
-const getScript = async function (spaceId,scriptId){
+const getScript = async function (spaceId,assistantId,scriptId){
     const client = await this.getClient(spaceId);
-    return await client.getScript(scriptId);
+    return await client.getScript(assistantId,scriptId);
 
 }
 
-const addScript = async function(spaceId,scriptData){
+const addScript = async function(spaceId,assistantId,scriptData){
     const client = await this.getClient(spaceId);
-    return await client.addScript(scriptData);
+    return await client.addScript(assistantId,scriptData);
 
 }
-const updateScript = async function(spaceId,scriptId,scriptData){
+const updateScript = async function(spaceId,assistantId,scriptId,scriptData){
     const client = await this.getClient(spaceId);
-    return await client.updateScript(scriptId,scriptData);
+    return await client.updateScript(assistantId,scriptId,scriptData);
 
 }
-const deleteScript = async function(spaceId,scriptId){
+const deleteScript = async function(spaceId,assistantId,scriptId){
     const client = await this.getClient(spaceId);
-    return await client.deleteScript(scriptId);
+    return await client.deleteScript(assistantId,scriptId);
 
 }
 module.exports = {
@@ -129,6 +134,7 @@ module.exports = {
     addScript,
     updateScript,
     deleteScript,
+    requiresAuth,
     getWebAssistant,
     getThemes,
     getSettings,
