@@ -64,6 +64,10 @@ async function logoutUser() {
     return await this.sendRequest(`/auth/logout`, "POST");
 }
 
+async function createGuestUser() {
+    let client = await this.getClient(constants.ADMIN_PLUGIN);
+    return await client.createGuestUser();
+}
 
 async function emailLogin(email, code) {
     return await this.sendRequest(`/auth/loginWithEmailCode`, 'POST', {email, code});
@@ -194,6 +198,7 @@ module.exports = {
     getCurrentSpaceId,
     listUserSpaces,
     setupTotp,
+    createGuestUser,
     enableTotp,
     generatePasskeySetupOptions,
     getPublicAuthInfo,
