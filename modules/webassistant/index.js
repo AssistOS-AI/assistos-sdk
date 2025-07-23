@@ -13,9 +13,9 @@ const getWebAssistant= async function (spaceId,assistantId) {
     return client.getWebAssistant(assistantId);
 };
 
-const requiresAuth = async function (spaceId,assistantId){
+const getAuth = async function (spaceId,assistantId){
     const client = await this.getClient(spaceId);
-    return client.requiresAuth(assistantId);
+    return client.getAuth(assistantId);
 }
 const getSettings = async function(spaceId,assistantId){
     const client = await this.getClient(spaceId);
@@ -134,7 +134,7 @@ module.exports = {
     addScript,
     updateScript,
     deleteScript,
-    requiresAuth,
+    getAuth,
     getWebAssistant,
     getThemes,
     getSettings,
