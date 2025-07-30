@@ -110,7 +110,20 @@ const getScripts = async function(spaceId,assistantId){
 const getScript = async function (spaceId,assistantId,scriptId){
     const client = await this.getClient(spaceId);
     return await client.getScript(assistantId,scriptId);
+}
+const getChat = async function (spaceId,assistantId,userId,chatId){
+    const client = await this.getClient(spaceId);
+    return await client.getChat(assistantId,chatId);
+}
 
+const getChats = async function (spaceId,assistantId,userId) {
+    const client = await this.getClient(spaceId);
+    return await client.getChats(assistantId,userId);
+}
+
+const createChat = async function (spaceId,assistantId,userId,chatData) {
+    const client = await this.getClient(spaceId);
+    return await client.createChat(assistantId,userId,chatData);
 }
 
 const addScript = async function(spaceId,assistantId,scriptData){
@@ -129,6 +142,9 @@ const deleteScript = async function(spaceId,assistantId,scriptId){
 
 }
 module.exports = {
+    getChat,
+    getChats,
+    createChat,
     getScripts,
     getScript,
     addScript,
