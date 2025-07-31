@@ -120,6 +120,10 @@ const getChats = async function (spaceId,assistantId,userId) {
     const client = await this.getClient(spaceId);
     return await client.getChats(assistantId,userId);
 }
+const getDefaultChatScript = async function (spaceId,assistantId) {
+    const client = await this.getClient(spaceId);
+    return await client.getDefaultChatScript(assistantId);
+}
 
 const createChat = async function (spaceId,assistantId,userId,chatData) {
     const client = await this.getClient(spaceId);
@@ -169,6 +173,7 @@ module.exports = {
     getMenu,
     addMenuItem,
     updateMenuItem,
+    getDefaultChatScript,
     deleteMenuItem,
     getWidget,
     getClient
