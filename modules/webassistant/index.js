@@ -113,7 +113,11 @@ const getScript = async function (spaceId,assistantId,scriptId){
 }
 const getChat = async function (spaceId,assistantId,userId,chatId){
     const client = await this.getClient(spaceId);
-    return await client.getChat(assistantId,chatId);
+    return await client.getChat(assistantId,userId,chatId);
+}
+const getControlRoom = async function (spaceId,assistantId,userId) {
+    const client = await this.getClient(spaceId);
+    return await client.getControlRoom(assistantId,userId);
 }
 
 const getChats = async function (spaceId,assistantId,userId) {
@@ -161,6 +165,7 @@ module.exports = {
     updateSettings,
     getTheme,
     addTheme,
+    getControlRoom,
     updateTheme,
     deleteTheme,
     addPage,
