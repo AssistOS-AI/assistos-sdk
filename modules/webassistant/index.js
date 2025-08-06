@@ -55,7 +55,10 @@ const addPage = async function (spaceId,assistantId, page) {
     const client = await this.getClient(spaceId);
     return client.addPage(assistantId,page);
 };
-
+const getUserChats = async function (spaceId,assistantId,userId) {
+    const client = await this.getClient(spaceId);
+    return client.getUserChats(assistantId,userId);
+}
 const getPages = async function (spaceId,assistantId) {
     const client = await this.getClient(spaceId);
     return client.getPages(assistantId);
@@ -96,7 +99,10 @@ const deleteMenuItem = async function (spaceId,assistantId, menuItemId) {
     const client = await this.getClient(spaceId);
     return client.deleteMenuItem(assistantId,menuItemId);
 };
-
+const createControlRoom = async function (spaceId,assistantId,userId) {
+    const client = await this.getClient(spaceId);
+    return client.createControlRoom(assistantId,userId);
+}
 const getWidget = async function (spaceId,assistantId, applicationId, widgetName) {
     const client = await this.getClient(spaceId);
     return client.getWidget(assistantId,applicationId, widgetName);
@@ -181,5 +187,7 @@ module.exports = {
     getDefaultChatScript,
     deleteMenuItem,
     getWidget,
+    createControlRoom,
+    getUserChats,
     getClient
 };
