@@ -9,7 +9,7 @@ module.exports = {
     WORKSPACE_PLUGIN: "Workspace",
     DOCUMENTS_PLUGIN: "Documents",
     WORKSPACE_USER_PLUGIN: "WorkspaceUser",
-    CHAT_PLUGIN: "Chat",
+    CHAT_ROOM_PLUGIN: "ChatRoom",
     CHAT_SCRIPT_PLUGIN: "ChatScript",
     LLM_PLUGIN: "LLM",
     TABLE_PLUGIN: "Table",

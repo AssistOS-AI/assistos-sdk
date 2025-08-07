@@ -23,7 +23,7 @@ async function getDefaultAgent(spaceId){
 async function addAgent(spaceId, agentData){
     let client = await this.getClient(constants.AGENT_PLUGIN, spaceId);
     let agent = await client.createAgent(agentData.name, agentData.description, "", agentData.imageId);
-    let chatClient = await this.getClient(constants.CHAT_PLUGIN, spaceId);
+    let chatClient = await this.getClient(constants.CHAT_ROOM_PLUGIN, spaceId);
     //use default chatScript
     //let chatId = await chatClient.createChat(agent.id);
     //await chatClient.addChatToAgent(agent.id, chatId);

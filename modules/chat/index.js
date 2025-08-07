@@ -1,5 +1,5 @@
 const {getAPIClient} = require("../util/utils");
-const {CHAT_PLUGIN} = require("../../constants");
+const {CHAT_ROOM_PLUGIN} = require("../../constants");
 const constants = require("../../constants");
 
 async function getClient(pluginName, spaceId) {
@@ -9,87 +9,87 @@ async function getClient(pluginName, spaceId) {
 }
 
 async function getChat(spaceId, chatId) {
-    const client = await this.getClient(CHAT_PLUGIN, spaceId);
+    const client = await this.getClient(CHAT_ROOM_PLUGIN, spaceId);
     return await client.getChat(chatId);
 }
 
 async function getChats(spaceId) {
-    const client = await this.getClient(CHAT_PLUGIN, spaceId);
+    const client = await this.getClient(CHAT_ROOM_PLUGIN, spaceId);
     return await client.getChats();
 }
 async function getUserChats(spaceId, userId) {
-    const client = await this.getClient(CHAT_PLUGIN, spaceId);
+    const client = await this.getClient(CHAT_ROOM_PLUGIN, spaceId);
     return await client.getUserChats(userId);
 }
 
 async function getChatHistory(spaceId, chatId) {
-    const client = await this.getClient(CHAT_PLUGIN, spaceId);
+    const client = await this.getClient(CHAT_ROOM_PLUGIN, spaceId);
     return await client.getChatHistory(chatId);
 }
 
 async function getChatContext(spaceId, chatId) {
-    const client = await this.getClient(CHAT_PLUGIN, spaceId);
+    const client = await this.getClient(CHAT_ROOM_PLUGIN, spaceId);
     return await client.getChatContext(chatId);
 }
 
 async function createChat(spaceId, chatId, chatScriptId, args) {
-    const client = await this.getClient(CHAT_PLUGIN, spaceId);
+    const client = await this.getClient(CHAT_ROOM_PLUGIN, spaceId);
     return await client.createChat(chatId, chatScriptId, args);
 }
 async function createUserChat(spaceId,userId, chatScriptId, args) {
-    const client = await this.getClient(CHAT_PLUGIN, spaceId);
+    const client = await this.getClient(CHAT_ROOM_PLUGIN, spaceId);
     return await client.createUserChat(chatScriptId, args);
 }
 
 async function deleteChat(spaceId, chatId) {
-    const client = await this.getClient(CHAT_PLUGIN, spaceId);
+    const client = await this.getClient(CHAT_ROOM_PLUGIN, spaceId);
     return await client.deleteChat(chatId);
 }
 
 async function resetChatContext(spaceId, chatId) {
-    const client = await this.getClient(CHAT_PLUGIN, spaceId);
+    const client = await this.getClient(CHAT_ROOM_PLUGIN, spaceId);
     return await client.resetChatContext(chatId);
 }
 
 async function resetChatMessages(spaceId, chatId) {
-    const client = await this.getClient(CHAT_PLUGIN, spaceId);
+    const client = await this.getClient(CHAT_ROOM_PLUGIN, spaceId);
     return await client.resetChatMessages(chatId);
 }
 
 async function addPreferenceToContext(spaceId, chatId, preference) {
-    const client = await this.getClient(CHAT_PLUGIN, spaceId);
+    const client = await this.getClient(CHAT_ROOM_PLUGIN, spaceId);
     return await client.addPreferenceToContext(chatId, preference);
 }
 
 async function deletePreferenceFromContext(spaceId, chatId, preference) {
-    const client = await this.getClient(CHAT_PLUGIN, spaceId);
+    const client = await this.getClient(CHAT_ROOM_PLUGIN, spaceId);
     return await client.deletePreferenceFromContext(chatId, preference);
 }
 
 async function addMessageToContext(spaceId, chatId, messageId) {
-    const client = await this.getClient(CHAT_PLUGIN, spaceId);
+    const client = await this.getClient(CHAT_ROOM_PLUGIN, spaceId);
     return await client.addMessageToContext(chatId, messageId);
 }
 
 async function removeMessageFromContext(spaceId, chatId, messageId) {
-    const client = await this.getClient(CHAT_PLUGIN, spaceId);
+    const client = await this.getClient(CHAT_ROOM_PLUGIN, spaceId);
     return await client.removeMessageFromContext(chatId, messageId);
 }
 
 async function updateChatContextItem(spaceId, chatId, contextItemId, contextItem) {
-    const client = await this.getClient(CHAT_PLUGIN, spaceId);
+    const client = await this.getClient(CHAT_ROOM_PLUGIN, spaceId);
     return await client.updateChatContextItem(chatId, contextItemId, contextItem);
 }
 
 async function chatInput(spaceId, chatId, agentName, message, role) {
-    const client = await this.getClient(CHAT_PLUGIN, spaceId);
+    const client = await this.getClient(CHAT_ROOM_PLUGIN, spaceId);
     return await client.chatInput(chatId, agentName, message, role);
 }
 function listenForMessages(spaceId, chatId, client) {
     return client.listenForMessages(chatId);
 }
 async function stopListeningForMessages(spaceId, chatId) {
-    const client = await this.getClient(CHAT_PLUGIN, spaceId);
+    const client = await this.getClient(CHAT_ROOM_PLUGIN, spaceId);
     return client.stopListeningForMessages(chatId);
 }
 
