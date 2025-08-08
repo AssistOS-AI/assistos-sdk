@@ -21,20 +21,38 @@ async function request(url, method = "GET", data, securityContext, headers = {},
     }
     if (envType === constants.ENV_TYPE.NODE && !externalRequest) {
         url = `${process.env.BASE_URL}${url}`;
-        if(securityContext.cookies){
+        if (securityContext && securityContext.cookies) {
             init.headers.Cookie = securityContext.cookies;
         }
     }
+
+    // Debug request log
+    const debugId = `[HTTP:${method}]`;
+    try {
+        const safeBodyPreview = typeof init.body === 'string' ? init.body.slice(0, 500) : (init.body ? '[binary/form body]' : undefined);
+        const loggedHeaders = { ...init.headers };
+        if (loggedHeaders.Cookie) loggedHeaders.Cookie = '[REDACTED]';
+        console.log(`${debugId} Request url=${url} externalRequest=${!!externalRequest}`);
+        console.log(`${debugId} Request headers=`, loggedHeaders);
+        if (safeBodyPreview !== undefined) {
+            console.log(`${debugId} Request body(<=500)=`, safeBodyPreview);
+        }
+    } catch (_) { }
+
     let response;
+    const startedAt = Date.now();
     try {
         response = await fetch(url, init);
     } catch (err) {
+        console.error(`${debugId} Network error: ${err.message}`);
         throw new Error(err.message);
     }
 
-    const contentType = response.headers.get('Content-Type');
-    if(!response.ok && !contentType){
-       return;
+    const durationMs = Date.now() - startedAt;
+    const contentType = response.headers.get('Content-Type') || '';
+    console.log(`${debugId} Response status=${response.status} durationMs=${durationMs} content-type=${contentType}`);
+    if (!response.ok && !contentType) {
+        return;
     }
     if (contentType.includes('application/zip')) {
         return await response.blob();
@@ -45,22 +63,31 @@ async function request(url, method = "GET", data, securityContext, headers = {},
     if (method === "HEAD") {
         return response.ok;
     }
-    if(contentType.includes('application/json')) {
-        const responseJSON = await response.json();
-        if (!response.ok) {
-            let errorData = {
-                status: response.status,
-                message: responseJSON.message || response.statusText
+    if (contentType.includes('application/json')) {
+        const jsonText = await response.text();
+        try {
+            const responseJSON = JSON.parse(jsonText);
+            if (!response.ok) {
+                let errorData = {
+                    status: response.status,
+                    message: responseJSON.message || response.statusText
+                };
+                console.error(`${debugId} JSON error response body(<=500)=`, jsonText.slice(0, 500));
+                throw new Error(JSON.stringify(errorData));
             }
-            throw new Error(JSON.stringify(errorData));
+            return responseJSON;
+        } catch (e) {
+            console.error(`${debugId} JSON parse error body(<=500)=`, jsonText.slice(0, 500));
+            throw e;
         }
-        return responseJSON;
     }
 
     let textResponse = await response.text();
-    if(!response.ok){
+    if (!response.ok) {
+        console.error(`${debugId} Error body(<=500)=`, textResponse.slice(0, 500));
         throw new Error(textResponse);
     }
+    console.log(`${debugId} Text body(<=500)=`, textResponse.slice(0, 500));
     return textResponse;
 }
 
