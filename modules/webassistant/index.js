@@ -8,162 +8,144 @@ async function getClient(spaceId){
     })
 }
 
-const getWebAssistant= async function (spaceId,assistantId) {
+const getWebAssistant= async function (spaceId) {
     const client = await this.getClient(spaceId);
-    return client.getWebAssistant(assistantId);
+    return client.getWebAssistant();
 };
 
-const getAuth = async function (spaceId,assistantId){
+const getAuth = async function (spaceId){
     const client = await this.getClient(spaceId);
-    return client.getAuth(assistantId);
+    return client.getAuth();
 }
-const getSettings = async function(spaceId,assistantId){
+const getSettings = async function(spaceId){
     const client = await this.getClient(spaceId);
-    return client.getSettings(assistantId);
-}
-
-const updateSettings = async function(spaceId, assistantId,settings) {
-    const client = await this.getClient(spaceId);
-    return client.updateSettings(assistantId,settings);
+    return client.getSettings();
 }
 
-const getThemes = async function (spaceId,assistantId) {
+const updateSettings = async function(spaceId, settings) {
     const client = await this.getClient(spaceId);
-    return client.getThemes(assistantId);
-};
-
-const getTheme = async function (spaceId,assistantId, themeId) {
-    const client = await this.getClient(spaceId);
-    return client.getTheme(assistantId,themeId);
-};
-
-const addTheme = async function (spaceId,assistantId, theme) {
-    const client = await this.getClient(spaceId);
-    return client.addTheme(assistantId,theme);
-};
-
-const updateTheme = async function (spaceId,assistantId, themeId, theme) {
-    const client = await this.getClient(spaceId);
-    return client.updateTheme(assistantId,themeId, theme);
-};
-const deleteTheme = async function (spaceId,assistantId, themeId) {
-    const client = await this.getClient(spaceId);
-    return client.deleteTheme(assistantId,themeId);
-};
-
-const addPage = async function (spaceId,assistantId, page) {
-    const client = await this.getClient(spaceId);
-    return client.addPage(assistantId,page);
-};
-const getUserChats = async function (spaceId,assistantId,userId) {
-    const client = await this.getClient(spaceId);
-    return client.getUserChats(assistantId,userId);
-}
-const getPages = async function (spaceId,assistantId) {
-    const client = await this.getClient(spaceId);
-    return client.getPages(assistantId);
-};
-const getPage = async function (spaceId,assistantId, pageId) {
-    const client = await this.getClient(spaceId);
-    return client.getPage(assistantId,pageId);
-};
-const updatePage = async function (spaceId,assistantId, pageId, page) {
-    const client = await this.getClient(spaceId);
-    return client.updatePage(assistantId,pageId, page);
-};
-const deletePage = async function (spaceId,assistantId, pageId) {
-    const client = await this.getClient(spaceId);
-    return client.deletePage(assistantId,pageId);
-};
-const getHomePage = async function (spaceId,assistantId) {
-    const client = await this.getClient(spaceId);
-    return client.getHomePage(assistantId);
-};
-const getMenuItem = async function (spaceId,assistantId, menuItemId) {
-    const client = await this.getClient(spaceId);
-    return client.getMenuItem(assistantId,menuItemId);
-};
-const getMenu = async function (spaceId,assistantId) {
-    const client = await this.getClient(spaceId);
-    return client.getMenu(assistantId);
-};
-const addMenuItem = async function (spaceId,assistantId, menuItem) {
-    const client = await this.getClient(spaceId);
-    return client.addMenuItem(assistantId,menuItem);
-};
-const updateMenuItem = async function (spaceId,assistantId,menuItemId, menuItem) {
-    const client = await this.getClient(spaceId);
-    return client.updateMenuItem(assistantId,menuItemId, menuItem);
-};
-const deleteMenuItem = async function (spaceId,assistantId, menuItemId) {
-    const client = await this.getClient(spaceId);
-    return client.deleteMenuItem(assistantId,menuItemId);
-};
-const createControlRoom = async function (spaceId,assistantId,userId) {
-    const client = await this.getClient(spaceId);
-    return client.createControlRoom(assistantId,userId);
-}
-const getWidget = async function (spaceId,assistantId, applicationId, widgetName) {
-    const client = await this.getClient(spaceId);
-    return client.getWidget(assistantId,applicationId, widgetName);
-};
-
-const getScripts = async function(spaceId,assistantId){
-    const client = await this.getClient(spaceId);
-    return await client.getScripts(assistantId);
+    return client.updateSettings(settings);
 }
 
-const getScript = async function (spaceId,assistantId,scriptId){
+const getThemes = async function (spaceId) {
     const client = await this.getClient(spaceId);
-    return await client.getScript(assistantId,scriptId);
+    return client.getThemes();
+};
+
+const getTheme = async function (spaceId, themeId) {
+    const client = await this.getClient(spaceId);
+    return client.getTheme(themeId);
+};
+
+const addTheme = async function (spaceId, theme) {
+    const client = await this.getClient(spaceId);
+    return client.addTheme(theme);
+};
+
+const updateTheme = async function (spaceId, themeId, theme) {
+    const client = await this.getClient(spaceId);
+    return client.updateTheme(themeId, theme);
+};
+const deleteTheme = async function (spaceId, themeId) {
+    const client = await this.getClient(spaceId);
+    return client.deleteTheme(themeId);
+};
+
+const addPage = async function (spaceId, page) {
+    const client = await this.getClient(spaceId);
+    return client.addPage(page);
+};
+const getUserChats = async function (spaceId,userId) {
+    const client = await this.getClient(spaceId);
+    return client.getUserChats(userId);
 }
-const getChat = async function (spaceId,assistantId,userId,chatId){
+const getPages = async function (spaceId) {
     const client = await this.getClient(spaceId);
-    return await client.getChat(assistantId,userId,chatId);
+    return client.getPages();
+};
+const getPage = async function (spaceId, pageId) {
+    const client = await this.getClient(spaceId);
+    return client.getPage(pageId);
+};
+const updatePage = async function (spaceId, pageId, page) {
+    const client = await this.getClient(spaceId);
+    return client.updatePage(pageId, page);
+};
+const deletePage = async function (spaceId, pageId) {
+    const client = await this.getClient(spaceId);
+    return client.deletePage(pageId);
+};
+const getHomePage = async function (spaceId) {
+    const client = await this.getClient(spaceId);
+    return client.getHomePage();
+};
+const getMenuItem = async function (spaceId, menuItemId) {
+    const client = await this.getClient(spaceId);
+    return client.getMenuItem(menuItemId);
+};
+const getMenu = async function (spaceId) {
+    const client = await this.getClient(spaceId);
+    return client.getMenu();
+};
+const addMenuItem = async function (spaceId, menuItem) {
+    const client = await this.getClient(spaceId);
+    return client.addMenuItem(menuItem);
+};
+const updateMenuItem = async function (spaceId, menuItemId, menuItem) {
+    const client = await this.getClient(spaceId);
+    return client.updateMenuItem(menuItemId, menuItem);
+};
+const deleteMenuItem = async function (spaceId, menuItemId) {
+    const client = await this.getClient(spaceId);
+    return client.deleteMenuItem(menuItemId);
+};
+const createControlRoom = async function (spaceId, userId) {
+    const client = await this.getClient(spaceId);
+    return client.createControlRoom(userId);
 }
-const getControlRoom = async function (spaceId,assistantId,userId) {
+const getWidget = async function (spaceId, applicationId, widgetName) {
     const client = await this.getClient(spaceId);
-    return await client.getControlRoom(assistantId,userId);
+    return client.getWidget(applicationId, widgetName);
+};
+
+const getScripts = async function(spaceId){
+    const client = await this.getClient(spaceId);
+    return await client.getScripts();
 }
 
-const getChats = async function (spaceId,assistantId,userId) {
+const getScript = async function (spaceId, scriptId){
     const client = await this.getClient(spaceId);
-    return await client.getChats(assistantId,userId);
+    return await client.getScript(scriptId);
 }
-const getDefaultChatScript = async function (spaceId,assistantId) {
+const getChat = async function (spaceId, userId, chatId){
     const client = await this.getClient(spaceId);
-    return await client.getDefaultChatScript(assistantId);
+    return await client.getChat(userId,chatId);
+}
+const getControlRoom = async function (spaceId, userId) {
+    const client = await this.getClient(spaceId);
+    return await client.getControlRoom(userId);
 }
 
-const createChat = async function (spaceId,assistantId,userId,chatData) {
+const getChats = async function (spaceId, userId) {
     const client = await this.getClient(spaceId);
-    return await client.createChat(assistantId,userId,chatData);
+    return await client.getChats(userId);
+}
+const getDefaultChatScript = async function (spaceId) {
+    const client = await this.getClient(spaceId);
+    return await client.getDefaultChatScript();
 }
 
-const addScript = async function(spaceId,assistantId,scriptData){
+const createChat = async function (spaceId, userId, chatData) {
     const client = await this.getClient(spaceId);
-    return await client.addScript(assistantId,scriptData);
-
+    return await client.createChat(userId,chatData);
 }
-const updateScript = async function(spaceId,assistantId,scriptId,scriptData){
-    const client = await this.getClient(spaceId);
-    return await client.updateScript(assistantId,scriptId,scriptData);
 
-}
-const deleteScript = async function(spaceId,assistantId,scriptId){
-    const client = await this.getClient(spaceId);
-    return await client.deleteScript(assistantId,scriptId);
-
-}
 module.exports = {
     getChat,
     getChats,
     createChat,
     getScripts,
     getScript,
-    addScript,
-    updateScript,
-    deleteScript,
     getAuth,
     getWebAssistant,
     getThemes,
