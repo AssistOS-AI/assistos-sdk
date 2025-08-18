@@ -56,21 +56,6 @@ const getUserChats = async function (spaceId,userId) {
     return client.getUserChats(userId);
 }
 
-const getScripts = async function(spaceId){
-    const client = await this.getClient(spaceId);
-    return await client.getScripts();
-}
-
-const getScript = async function (spaceId, scriptId){
-    const client = await this.getClient(spaceId);
-    return await client.getScript(scriptId);
-}
-
-const getDefaultChatScript = async function (spaceId) {
-    const client = await this.getClient(spaceId);
-    return await client.getDefaultChatScript();
-}
-
 const createChat = async function (spaceId, userId, docId, scriptName, args) {
     const client = await this.getClient(spaceId);
     return await client.createChat(userId, docId, scriptName, args);
@@ -82,8 +67,6 @@ const createDefaultChat = async function (spaceId, userId, docId, scriptName, ar
 
 module.exports = {
     createChat,
-    getScripts,
-    getScript,
     getAuth,
     getWebAssistant,
     getThemes,
@@ -93,7 +76,6 @@ module.exports = {
     addTheme,
     updateTheme,
     deleteTheme,
-    getDefaultChatScript,
     getUserChats,
     getClient,
     createDefaultChat

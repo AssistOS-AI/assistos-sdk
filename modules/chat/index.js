@@ -36,50 +36,12 @@ async function createChat(spaceId, chatId, chatScriptId, args) {
     const client = await this.getClient(CHAT_ROOM_PLUGIN, spaceId);
     return await client.createChat(chatId, chatScriptId, args);
 }
-async function createUserChat(spaceId,userId, chatScriptId, args) {
-    const client = await this.getClient(CHAT_ROOM_PLUGIN, spaceId);
-    return await client.createUserChat(chatScriptId, args);
-}
 
 async function deleteChat(spaceId, chatId) {
     const client = await this.getClient(CHAT_ROOM_PLUGIN, spaceId);
     return await client.deleteChat(chatId);
 }
 
-async function resetChatContext(spaceId, chatId) {
-    const client = await this.getClient(CHAT_ROOM_PLUGIN, spaceId);
-    return await client.resetChatContext(chatId);
-}
-
-async function resetChatMessages(spaceId, chatId) {
-    const client = await this.getClient(CHAT_ROOM_PLUGIN, spaceId);
-    return await client.resetChatMessages(chatId);
-}
-
-async function addPreferenceToContext(spaceId, chatId, preference) {
-    const client = await this.getClient(CHAT_ROOM_PLUGIN, spaceId);
-    return await client.addPreferenceToContext(chatId, preference);
-}
-
-async function deletePreferenceFromContext(spaceId, chatId, preference) {
-    const client = await this.getClient(CHAT_ROOM_PLUGIN, spaceId);
-    return await client.deletePreferenceFromContext(chatId, preference);
-}
-
-async function addMessageToContext(spaceId, chatId, messageId) {
-    const client = await this.getClient(CHAT_ROOM_PLUGIN, spaceId);
-    return await client.addMessageToContext(chatId, messageId);
-}
-
-async function removeMessageFromContext(spaceId, chatId, messageId) {
-    const client = await this.getClient(CHAT_ROOM_PLUGIN, spaceId);
-    return await client.removeMessageFromContext(chatId, messageId);
-}
-
-async function updateChatContextItem(spaceId, chatId, contextItemId, contextItem) {
-    const client = await this.getClient(CHAT_ROOM_PLUGIN, spaceId);
-    return await client.updateChatContextItem(chatId, contextItemId, contextItem);
-}
 
 async function chatInput(spaceId, chatId, agentName, message, role) {
     const client = await this.getClient(CHAT_ROOM_PLUGIN, spaceId);
@@ -102,9 +64,9 @@ async function getChatScript(spaceId, name) {
     let client = await this.getClient(constants.CHAT_SCRIPT_PLUGIN, spaceId);
     return await client.getChatScript(name);
 }
-async function createChatScript(spaceId, name, code, description) {
+async function createChatScript(spaceId, name, code, description, widgets, role) {
     let client = await this.getClient(constants.CHAT_SCRIPT_PLUGIN, spaceId);
-    return await client.createChatScript(name, code, description);
+    return await client.createChatScript(name, code, description, widgets, role);
 }
 async function updateChatScript(spaceId, scriptId, script) {
     let client = await this.getClient(constants.CHAT_SCRIPT_PLUGIN, spaceId);
@@ -119,6 +81,14 @@ async function getChatScriptNames(spaceId) {
     let client = await this.getClient(constants.CHAT_SCRIPT_PLUGIN, spaceId);
     return await client.getChatScriptNames();
 }
+const getDefaultChatScript = async function (spaceId) {
+    const client = await this.getClient(constants.CHAT_SCRIPT_PLUGIN, spaceId);
+    return await client.getDefaultChatScript();
+}
+async function getWidgetsForChatRoomInstance(spaceId, chatId){
+    let client = await this.getClient(CHAT_ROOM_PLUGIN, spaceId);
+    return await client.getWidgetsForChatRoomInstance(chatId);
+}
 module.exports = {
     getChat,
     getChats,
@@ -126,15 +96,7 @@ module.exports = {
     getChatContext,
     getUserChats,
     createChat,
-    createUserChat,
     deleteChat,
-    resetChatContext,
-    resetChatMessages,
-    addPreferenceToContext,
-    deletePreferenceFromContext,
-    addMessageToContext,
-    removeMessageFromContext,
-    updateChatContextItem,
     chatInput,
     listenForMessages,
     getClient,
@@ -144,5 +106,7 @@ module.exports = {
     createChatScript,
     updateChatScript,
     deleteChatScript,
-    getChatScriptNames
+    getChatScriptNames,
+    getDefaultChatScript,
+    getWidgetsForChatRoomInstance
 };
