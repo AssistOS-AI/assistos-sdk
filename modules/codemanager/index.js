@@ -12,27 +12,35 @@ const getCode = async function (spaceId, componentId) {
     return await client.getCode(componentId);
 }
 
-const saveCode = async function (spaceId, fileName, editorContent) {
+const saveCode = async function (spaceId, folder, fileName, editorContent) {
     const client = await this.getClient(constants.CODE_MANAGER_PLUGIN, spaceId);
-    return await client.saveCode(fileName, editorContent);
+    return await client.saveCode(folder, fileName, editorContent);
+}
+const newApp = async function (spaceId, appName) {
+    const client = await this.getClient(constants.CODE_MANAGER_PLUGIN, spaceId);
+    return await client.newApp(appName);
 }
 const saveWebskelComponent = async function (spaceId, fileName, componentData) {
     const client = await this.getClient(constants.CODE_MANAGER_PLUGIN, spaceId);
     return await client.saveWebskelComponent(fileName, componentData);
 }
-async function getWidget(spaceId, appName, widgetId){
+
+async function getWidget(spaceId, appName, widgetId) {
     const client = await this.getClient(constants.CODE_MANAGER_PLUGIN, spaceId);
     return await client.getWidget(appName, widgetId);
 }
-async function getWidgets(spaceId){
+
+async function getWidgets(spaceId) {
     const client = await this.getClient(constants.CODE_MANAGER_PLUGIN, spaceId);
     return await client.getWidgets();
 }
+
 module.exports = {
     getClient,
     getCode,
     saveCode,
     saveWebskelComponent,
     getWidget,
-    getWidgets
+    getWidgets,
+    newApp
 }
