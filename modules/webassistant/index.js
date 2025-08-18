@@ -56,16 +56,6 @@ const getUserChats = async function (spaceId,userId) {
     return client.getUserChats(userId);
 }
 
-const getWidgets = async function (spaceId) {
-    const client = await this.getClient(spaceId);
-    return client.getWidgets();
-};
-
-const getWidget = async function (spaceId, pageId) {
-    const client = await this.getClient(spaceId);
-    return client.getWidget(pageId);
-};
-
 const getScripts = async function(spaceId){
     const client = await this.getClient(spaceId);
     return await client.getScripts();
@@ -104,8 +94,6 @@ module.exports = {
     updateTheme,
     deleteTheme,
     getDefaultChatScript,
-    getWidget,
-    getWidgets,
     getUserChats,
     getClient,
     createDefaultChat
