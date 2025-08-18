@@ -39,6 +39,8 @@ function _loadModule(moduleName) {
             return require('./modules/chat');
         case 'webassistant':
             return require('./modules/webassistant');
+        case 'codemanager':
+            return require('./modules/codemanager');
         default:
             return null;
     }

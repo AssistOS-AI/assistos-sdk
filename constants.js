@@ -14,6 +14,7 @@ module.exports = {
     LLM_PLUGIN: "LLM",
     TABLE_PLUGIN: "Table",
     WEB_ASSISTANT_PLUGIN: "WebAssistant",
+    CODE_MANAGER_PLUGIN: "CodeManager",
     FFMPEG_PLUGIN: "Ffmpeg",
     GLOBAL_SERVERLESS_ID: "assistOS",
     TICKETS_PLUGIN: "TicketsPlugin",
