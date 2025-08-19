@@ -16,9 +16,13 @@ const saveCode = async function (spaceId, folder, fileName, editorContent) {
     const client = await this.getClient(constants.CODE_MANAGER_PLUGIN, spaceId);
     return await client.saveCode(folder, fileName, editorContent);
 }
-const newApp = async function (spaceId, appName) {
+const createApp = async function (spaceId, appName) {
     const client = await this.getClient(constants.CODE_MANAGER_PLUGIN, spaceId);
-    return await client.newApp(appName);
+    return await client.createApp(appName);
+}
+async function getApps(spaceId){
+    const client = await this.getClient(constants.CODE_MANAGER_PLUGIN, spaceId);
+    return await client.getApps();
 }
 const saveWebskelComponent = async function (spaceId, fileName, componentData) {
     const client = await this.getClient(constants.CODE_MANAGER_PLUGIN, spaceId);
@@ -34,6 +38,10 @@ async function getWidgets(spaceId) {
     const client = await this.getClient(constants.CODE_MANAGER_PLUGIN, spaceId);
     return await client.getWidgets();
 }
+async function listWidgets(spaceId, appName){
+    const client = await this.getClient(constants.CODE_MANAGER_PLUGIN, spaceId);
+    return await client.listWidgets(appName);
+}
 
 module.exports = {
     getClient,
@@ -42,5 +50,7 @@ module.exports = {
     saveWebskelComponent,
     getWidget,
     getWidgets,
-    newApp
+    createApp,
+    getApps,
+    listWidgets
 }

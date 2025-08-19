@@ -7,10 +7,6 @@ const constants = require("../../constants");
 async function sendRequest(url, method, data) {
     return await request(url, method, data, this.__securityContext);
 }
-async function getWidgets(spaceId) {
-    let client = await this.getClient(constants.APPLICATION_PLUGIN, spaceId);
-    return await client.getWidgets();
-}
  async function getClient(pluginName, serverlessId){
      return await getAPIClient(this.__securityContext.userId, pluginName, serverlessId, {
          email: this.__securityContext.email,
@@ -50,10 +46,10 @@ async function uninstallApplication(spaceId, applicationId) {
     return await client.uninstallApplication(applicationId);
 }
 
-async function getApplicationConfig(spaceId, applicationId) {
+async function getApplicationManifest(spaceId, applicationId) {
     //TODO: tons of requests when loading plugins in document page
     let client = await this.getClient(constants.APPLICATION_PLUGIN, spaceId);
-    return await client.loadApplicationConfig(applicationId);
+    return await client.getApplicationManifest(applicationId);
 }
 
 async function getAvailableApps(spaceId) {
@@ -102,23 +98,12 @@ async function getApplicationsPlugins(spaceId) {
     return await client.getApplicationsPlugins();
 }
 
-/*
-async function storeAppObject(appName, objectType, objectId, stringData) {
-    return await this.sendRequest(`/app/${assistOS.space.id}/applications/${appName}/${objectType}/${objectId}`, "PUT", stringData);
-}
-async function loadAppObjects(appName, objectType) {
-    return await this.sendRequest(`/app/${assistOS.space.id}/applications/${appName}/${objectType}`, "GET");
-}
-*/
-
-
 module.exports = {
     getClient,
     installApplication,
-    getWidgets,
     uninstallApplication,
     getAvailableApps,
-    getApplicationConfig,
+    getApplicationManifest,
     getApplicationFile,
     sendRequest,
     updateApplication,
