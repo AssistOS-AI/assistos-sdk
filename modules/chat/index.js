@@ -77,9 +77,9 @@ async function deleteChatScript(spaceId, scriptId) {
     let client = await this.getClient(constants.CHAT_SCRIPT_PLUGIN, spaceId);
     return await client.deleteChatScript(scriptId);
 }
-async function getChatScriptNames(spaceId) {
+async function getChatScriptNamesByRole(spaceId) {
     let client = await this.getClient(constants.CHAT_SCRIPT_PLUGIN, spaceId);
-    return await client.getChatScriptNames();
+    return await client.getChatScriptNamesByRole();
 }
 const getDefaultChatScript = async function (spaceId) {
     const client = await this.getClient(constants.CHAT_SCRIPT_PLUGIN, spaceId);
@@ -106,7 +106,7 @@ module.exports = {
     createChatScript,
     updateChatScript,
     deleteChatScript,
-    getChatScriptNames,
     getDefaultChatScript,
-    getWidgetsForChatRoomInstance
+    getWidgetsForChatRoomInstance,
+    getChatScriptNamesByRole
 };
