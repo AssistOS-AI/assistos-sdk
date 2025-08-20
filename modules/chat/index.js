@@ -85,9 +85,9 @@ const getDefaultChatScript = async function (spaceId) {
     const client = await this.getClient(constants.CHAT_SCRIPT_PLUGIN, spaceId);
     return await client.getDefaultChatScript();
 }
-async function getWidgetsForChatRoomInstance(spaceId, chatId){
+async function getComponentsForChatRoomInstance(spaceId, chatId){
     let client = await this.getClient(CHAT_ROOM_PLUGIN, spaceId);
-    return await client.getWidgetsForChatRoomInstance(chatId);
+    return await client.getComponentsForChatRoomInstance(chatId);
 }
 module.exports = {
     getChat,
@@ -107,6 +107,6 @@ module.exports = {
     updateChatScript,
     deleteChatScript,
     getDefaultChatScript,
-    getWidgetsForChatRoomInstance,
+    getComponentsForChatRoomInstance,
     getChatScriptNamesByRole
 };
