@@ -17,10 +17,6 @@ async function getChats(spaceId) {
     const client = await this.getClient(CHAT_ROOM_PLUGIN, spaceId);
     return await client.getChats();
 }
-async function getUserChats(spaceId, userId) {
-    const client = await this.getClient(CHAT_ROOM_PLUGIN, spaceId);
-    return await client.getUserChats(userId);
-}
 
 async function getChatHistory(spaceId, chatId) {
     const client = await this.getClient(CHAT_ROOM_PLUGIN, spaceId);
@@ -32,16 +28,25 @@ async function getChatContext(spaceId, chatId) {
     return await client.getChatContext(chatId);
 }
 
-async function createChat(spaceId, chatId, chatScriptId, args) {
+
+const getUserChats = async function (spaceId, email) {
     const client = await this.getClient(CHAT_ROOM_PLUGIN, spaceId);
-    return await client.createChat(chatId, chatScriptId, args);
+    return client.getUserChats(email);
+}
+
+const createChat = async function (spaceId, email, docId, scriptName, args) {
+    const client = await this.getClient(CHAT_ROOM_PLUGIN, spaceId);
+    return await client.createChat(email, docId, scriptName, args);
+}
+const createDefaultChat = async function (spaceId, email, docId, scriptName, args) {
+    const client = await this.getClient(CHAT_ROOM_PLUGIN, spaceId);
+    return await client.createDefaultChat(email, docId, scriptName, args);
 }
 
 async function deleteChat(spaceId, chatId) {
     const client = await this.getClient(CHAT_ROOM_PLUGIN, spaceId);
     return await client.deleteChat(chatId);
 }
-
 
 async function chatInput(spaceId, chatId, agentName, message, role) {
     const client = await this.getClient(CHAT_ROOM_PLUGIN, spaceId);
@@ -95,6 +100,7 @@ module.exports = {
     getChatHistory,
     getChatContext,
     getUserChats,
+    createDefaultChat,
     createChat,
     deleteChat,
     chatInput,

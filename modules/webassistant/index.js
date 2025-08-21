@@ -16,14 +16,10 @@ const getAuth = async function (spaceId){
     const client = await this.getClient(spaceId);
     return client.getAuth();
 }
-const getSettings = async function(spaceId){
-    const client = await this.getClient(spaceId);
-    return client.getSettings();
-}
 
-const updateSettings = async function(spaceId, settings) {
+const updateWebAssistant = async function(spaceId, data) {
     const client = await this.getClient(spaceId);
-    return client.updateSettings(settings);
+    return client.updateWebAssistant(data);
 }
 
 const getThemes = async function (spaceId) {
@@ -51,32 +47,15 @@ const deleteTheme = async function (spaceId, themeId) {
     return client.deleteTheme(themeId);
 };
 
-const getUserChats = async function (spaceId,userId) {
-    const client = await this.getClient(spaceId);
-    return client.getUserChats(userId);
-}
-
-const createChat = async function (spaceId, userId, docId, scriptName, args) {
-    const client = await this.getClient(spaceId);
-    return await client.createChat(userId, docId, scriptName, args);
-}
-const createDefaultChat = async function (spaceId, userId, docId, scriptName, args) {
-    const client = await this.getClient(spaceId);
-    return await client.createDefaultChat(userId, docId, scriptName, args);
-}
 
 module.exports = {
-    createChat,
     getAuth,
     getWebAssistant,
+    updateWebAssistant,
     getThemes,
-    getSettings,
-    updateSettings,
     getTheme,
     addTheme,
     updateTheme,
     deleteTheme,
-    getUserChats,
     getClient,
-    createDefaultChat
 };
