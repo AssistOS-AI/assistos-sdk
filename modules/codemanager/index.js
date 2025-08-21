@@ -29,9 +29,13 @@ const saveWebskelComponent = async function (spaceId, fileName, componentData) {
     return await client.saveWebskelComponent(fileName, componentData);
 }
 
-async function listComponents(spaceId, appName){
+async function listComponents(spaceId){
     const client = await this.getClient(constants.CODE_MANAGER_PLUGIN, spaceId);
-    return await client.listComponents(appName);
+    return await client.listComponents();
+}
+async function listComponentsForApp(spaceId, appName){
+    const client = await this.getClient(constants.CODE_MANAGER_PLUGIN, spaceId);
+    return await client.listComponentsForApp(appName);
 }
 
 module.exports = {
@@ -41,5 +45,6 @@ module.exports = {
     saveWebskelComponent,
     listComponents,
     createApp,
-    getApps
+    getApps,
+    listComponentsForApp
 }
