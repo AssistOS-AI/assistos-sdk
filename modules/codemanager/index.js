@@ -37,7 +37,14 @@ async function listComponentsForApp(spaceId, appName){
     const client = await this.getClient(constants.CODE_MANAGER_PLUGIN, spaceId);
     return await client.listComponentsForApp(appName);
 }
-
+async function listBackendPluginsForApp(spaceId, appName){
+    const client = await this.getClient(constants.CODE_MANAGER_PLUGIN, spaceId);
+    return await client.listBackendPluginsForApp(appName);
+}
+async function getAppPersistoConfig(spaceId, appName){
+    const client = await this.getClient(constants.CODE_MANAGER_PLUGIN, spaceId);
+    return await client.getAppPersistoConfig(appName);
+}
 module.exports = {
     getClient,
     getCode,
@@ -46,5 +53,7 @@ module.exports = {
     listComponents,
     createApp,
     getApps,
-    listComponentsForApp
+    listComponentsForApp,
+    listBackendPluginsForApp,
+    getAppPersistoConfig
 }
