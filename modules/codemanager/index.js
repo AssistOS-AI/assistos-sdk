@@ -24,9 +24,13 @@ async function getApps(spaceId){
     const client = await this.getClient(constants.CODE_MANAGER_PLUGIN, spaceId);
     return await client.getApps();
 }
-const saveWebskelComponent = async function (spaceId, fileName, componentData) {
+async function getComponent(spaceId, appName, componentName){
     const client = await this.getClient(constants.CODE_MANAGER_PLUGIN, spaceId);
-    return await client.saveWebskelComponent(fileName, componentData);
+    return await client.getComponent(appName, componentName);
+}
+async function saveComponent(spaceId, appName, componentName, html, css, js) {
+    const client = await this.getClient(constants.CODE_MANAGER_PLUGIN, spaceId);
+    return await client.saveComponent(appName, componentName, html, css, js);
 }
 
 async function listComponents(spaceId){
@@ -49,11 +53,12 @@ module.exports = {
     getClient,
     getCode,
     saveCode,
-    saveWebskelComponent,
+    saveComponent,
     listComponents,
     createApp,
     getApps,
     listComponentsForApp,
     listBackendPluginsForApp,
-    getAppPersistoConfig
+    getAppPersistoConfig,
+    getComponent
 }
