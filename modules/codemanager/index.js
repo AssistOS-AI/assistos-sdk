@@ -7,15 +7,6 @@ async function getClient(pluginName, spaceId) {
     })
 }
 
-const getCode = async function (spaceId, componentId) {
-    const client = await this.getClient(constants.CODE_MANAGER_PLUGIN, spaceId);
-    return await client.getCode(componentId);
-}
-
-const saveCode = async function (spaceId, folder, fileName, editorContent) {
-    const client = await this.getClient(constants.CODE_MANAGER_PLUGIN, spaceId);
-    return await client.saveCode(folder, fileName, editorContent);
-}
 const createApp = async function (spaceId, appName) {
     const client = await this.getClient(constants.CODE_MANAGER_PLUGIN, spaceId);
     return await client.createApp(appName);
@@ -41,6 +32,10 @@ async function listComponentsForApp(spaceId, appName){
     const client = await this.getClient(constants.CODE_MANAGER_PLUGIN, spaceId);
     return await client.listComponentsForApp(appName);
 }
+async function deleteComponent(spaceId, appName, componentName){
+    const client = await this.getClient(constants.CODE_MANAGER_PLUGIN, spaceId);
+    return await client.deleteComponent(appName, componentName);
+}
 async function listBackendPluginsForApp(spaceId, appName){
     const client = await this.getClient(constants.CODE_MANAGER_PLUGIN, spaceId);
     return await client.listBackendPluginsForApp(appName);
@@ -49,10 +44,16 @@ async function getAppPersistoConfig(spaceId, appName){
     const client = await this.getClient(constants.CODE_MANAGER_PLUGIN, spaceId);
     return await client.getAppPersistoConfig(appName);
 }
+async function saveBackendPlugin(spaceId, appName, pluginName, content, newName){
+    const client = await this.getClient(constants.CODE_MANAGER_PLUGIN, spaceId);
+    return await client.saveBackendPlugin(appName, pluginName, content, newName);
+}
+async function getBackendPlugin(spaceId, appName, pluginName){
+    const client = await this.getClient(constants.CODE_MANAGER_PLUGIN, spaceId);
+    return await client.getBackendPlugin(appName, pluginName);
+}
 module.exports = {
     getClient,
-    getCode,
-    saveCode,
     saveComponent,
     listComponents,
     createApp,
@@ -60,5 +61,8 @@ module.exports = {
     listComponentsForApp,
     listBackendPluginsForApp,
     getAppPersistoConfig,
-    getComponent
+    getComponent,
+    deleteComponent,
+    saveBackendPlugin,
+    getBackendPlugin
 }
