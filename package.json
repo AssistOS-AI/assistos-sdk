@@ -19,6 +19,8 @@
   },
   "homepage": "https://github.com/AssistOS-AI/assistos-sdk#readme",
   "devDependencies": {
-    "vite": "^5.3.3"
+    "vite": "^5.3.3",
+    "@rollup/plugin-commonjs": "^26.0.1",
+    "@rollup/plugin-node-resolve": "^15.2.3"
   }
 }
