@@ -1,13 +1,7 @@
 import { defineConfig } from 'vite';
 import { resolve } from 'path';
-import dynamicImport from '@originjs/vite-plugin-dynamic-import';
-import commonjs from '@rollup/plugin-commonjs';
 
 export default defineConfig({
-  plugins: [
-    dynamicImport(),
-    commonjs()
-  ],
   build: {
     lib: {
       entry: resolve(__dirname, 'index.js'),
@@ -18,10 +12,13 @@ export default defineConfig({
     rollupOptions: {
       external: [],
       output: {
-        globals: {}
+        globals: {},
+        inlineDynamicImports: true
       }
     },
     outDir: 'dist',
-    emptyOutDir: true
+    emptyOutDir: true,
+    minify: false,
+    sourcemap: false
   }
 });
