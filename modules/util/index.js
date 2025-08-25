@@ -1,5 +1,16 @@
 const constants = require("../../constants.js");
-const envType = require("assistos").envType;
+
+function detectEnvironment() {
+    if (typeof fetch === 'function' && typeof document === 'object') {
+        return constants.ENV_TYPE.BROWSER;
+    } else if (typeof require === 'function' && typeof module === 'object' && typeof module.exports === 'object') {
+        return constants.ENV_TYPE.NODE;
+    } else {
+        return constants.ENV_TYPE.UNKNOWN;
+    }
+}
+
+const envType = detectEnvironment();
 
 
 async function request(url, method = "GET", data, securityContext, headers = {}, externalRequest) {

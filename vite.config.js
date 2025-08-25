@@ -8,16 +8,25 @@ const __dirname = dirname(fileURLToPath(import.meta.url));
 
 export default defineConfig({
   plugins: [
-    commonjs({
-      include: [/./],
-      transformMixedEsModules: true,
-      ignoreDynamicRequires: false,
-      requireReturnsDefault: 'auto'
-    }),
-    nodeResolve({
-      preferBuiltins: false,
-      browser: true
-    })
+    {
+      name: 'ignore-dynamic-imports',
+      resolveId(source) {
+        // Ignore absolute dynamic imports that can't be bundled
+        if (source.startsWith('/applications/files/')) {
+          return { id: source, external: true };
+        }
+      },
+      transform(code, id) {
+        // Replace problematic dynamic imports with stubs
+        if (id.includes('modules/application/index.js')) {
+          return code.replace(
+            /import\(`\/applications\/files\/\$\{spaceId\}\/\$\{applicationId\}\/\$\{encodedPath\}`\)/g,
+            'Promise.resolve({ default: {} })'
+          );
+        }
+        return null;
+      }
+    }
   ],
   build: {
     lib: {
@@ -37,12 +46,19 @@ export default defineConfig({
         commonjs({
           include: [/./],
           transformMixedEsModules: true,
-          ignoreDynamicRequires: false,
+          ignoreDynamicRequires: true,
           requireReturnsDefault: 'auto'
         }),
         nodeResolve({
           preferBuiltins: false,
-          browser: true
+          browser: true,
+          resolveOnly: (module) => {
+            // Don't resolve serverless module externally
+            if (module.includes('serverless')) {
+              return true;
+            }
+            return !module.includes('node_modules');
+          }
         })
       ]
     },
@@ -52,7 +68,11 @@ export default defineConfig({
     sourcemap: false
   },
   resolve: {
-    extensions: ['.js', '.json'],
-    preferBuiltins: false
+    extensions: ['.js', '.json', '.mjs'],
+    preferBuiltins: false,
+    alias: {
+      'assistos': resolve(__dirname, 'index.js'),
+      './serverless': resolve(__dirname, 'modules/util/serverless/serverless-client.mjs')
+    }
   }
 });
