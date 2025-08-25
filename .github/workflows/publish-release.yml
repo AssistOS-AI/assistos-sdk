@@ -1,0 +1,57 @@
+name: Publish Release
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+    inputs:
+      version:
+        description: 'Optional release version (e.g., v1.2.3)'
+        required: false
+
+jobs:
+  build-and-publish:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout main repo
+        uses: actions/checkout@v3
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18'
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Build with Vite
+        run: npx vite build
+
+      - name: Publish to releases repo
+        run: |
+          git config --global user.name 'github-actions'
+          git config --global user.email 'github-actions@github.com'
+          git clone https://${{ secrets.GIT_TOKEN }}@github.com/AssistOS-AI/assistos-sdk-releases.git ../assistos-sdk-releases
+          cp dist/assistos-sdk.es.js ../assistos-sdk-releases/assistos-sdk.mjs
+          cp dist/assistos-sdk.umd.js ../assistos-sdk-releases/assistos-sdk.umd.js
+          cd ../assistos-sdk-releases
+
+          if [ -n "${{ github.event.inputs.version }}" ]; then
+            VERSION="${{ github.event.inputs.version }}"
+          else
+            LATEST_TAG=$(git describe --tags --abbrev=0 2>/dev/null || echo "v0.0.0")
+            LATEST_VERSION=${LATEST_TAG#v}
+            IFS='.' read -r -a V_PARTS <<< "$LATEST_VERSION"
+            V_PARTS[2]=$((V_PARTS[2] + 1))
+            VERSION="v${V_PARTS[0]}.${V_PARTS[1]}.${V_PARTS[2]}"
+          fi
+
+          echo "Publishing version: $VERSION"
+
+          git add .
+          git commit -m "Release $VERSION" || echo "No changes to commit"
+          git tag $VERSION
+          git push --follow-tags
+          git push

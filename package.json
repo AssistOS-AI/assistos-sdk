@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "postinstall": "rm -rf ./modules/util/serverless && git clone https://github.com/opendsu/serverlessClient.git ./modules/util/serverless",
+    "postinstall": "rm -rf ./modules/util/serverless && git clone https://github.com/OpenDSU/serverlessClient-releases.git ./modules/util/serverless",
     "build": "node ../opendsu-sdk/psknode/bin/scripts/pskbuild.js --source=./../ --projectMap=./build/build.json  --prod=true --output=./build/bundles"
   },
   "repository": {
@@ -17,5 +17,8 @@
   "bugs": {
     "url": "https://github.com/AssistOS-AI/assistos-sdk/issues"
   },
-  "homepage": "https://github.com/AssistOS-AI/assistos-sdk#readme"
+  "homepage": "https://github.com/AssistOS-AI/assistos-sdk#readme",
+  "devDependencies": {
+    "vite": "^5.3.3"
+  }
 }
