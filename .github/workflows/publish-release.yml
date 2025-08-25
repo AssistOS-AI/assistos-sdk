@@ -29,7 +29,9 @@ jobs:
       - name: Build with Vite
         run: npx vite build
 
-      - name: Publish to releases repo
+      - name: Publish and Create Release
+        env:
+          GH_TOKEN: ${{ secrets.GIT_TOKEN }}
         run: |
           git config --global user.name 'github-actions'
           git config --global user.email 'github-actions@github.com'
@@ -41,7 +43,8 @@ jobs:
           if [ -n "${{ github.event.inputs.version }}" ]; then
             VERSION="${{ github.event.inputs.version }}"
           else
-            LATEST_TAG=$(git describe --tags --abbrev=0 2>/dev/null || echo "v0.0.0")
+            git fetch --tags
+            LATEST_TAG=$(git describe --tags `git rev-list --tags --max-count=1` 2>/dev/null || echo "v0.0.0")
             LATEST_VERSION=${LATEST_TAG#v}
             IFS='.' read -r -a V_PARTS <<< "$LATEST_VERSION"
             V_PARTS[2]=$((V_PARTS[2] + 1))
@@ -51,7 +54,14 @@ jobs:
           echo "Publishing version: $VERSION"
 
           git add .
-          git commit -m "Release $VERSION" || echo "No changes to commit"
-          git tag $VERSION
-          git push --follow-tags
-          git push
+          git commit --allow-empty -m "Release $VERSION"
+          git tag -a "$VERSION" -m "Release $VERSION"
+          git push origin main
+          git push origin "$VERSION"
+
+          gh release create "$VERSION" \
+            --repo "AssistOS-AI/assistos-sdk-releases" \
+            --title "Release $VERSION" \
+            --notes "Automated release of version $VERSION." \
+            ./assistos-sdk.mjs \
+            ./assistos-sdk.umd.js
