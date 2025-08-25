@@ -1,0 +1,129 @@
+name: Bundle and Release SDK
+
+on:
+  workflow_dispatch:
+    inputs:
+      version:
+        description: 'Release version (leave empty to auto-increment patch version)'
+        required: false
+        type: string
+
+jobs:
+  bundle-and-release:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout SDK repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+      
+      - name: Install dependencies
+        run: npm ci
+      
+      - name: Build bundles
+        run: npm run build
+      
+      - name: Checkout releases repository
+        uses: actions/checkout@v4
+        with:
+          repository: AssistOS-AI/assistos-sdk-releases
+          token: ${{ secrets.GITHUB_TOKEN }}
+          path: releases-repo
+      
+      - name: Determine version
+        id: version
+        run: |
+          if [ -n "${{ github.event.inputs.version }}" ]; then
+            VERSION="${{ github.event.inputs.version }}"
+          else
+            # Get the latest tag from releases repo
+            cd releases-repo
+            git fetch --tags
+            LATEST_TAG=$(git describe --tags --abbrev=0 2>/dev/null || echo "v0.0.0")
+            cd ..
+            
+            # Extract version numbers
+            VERSION_WITHOUT_V=${LATEST_TAG#v}
+            IFS='.' read -r MAJOR MINOR PATCH <<< "$VERSION_WITHOUT_V"
+            
+            # Increment patch version
+            PATCH=$((PATCH + 1))
+            VERSION="${MAJOR}.${MINOR}.${PATCH}"
+          fi
+          
+          echo "version=$VERSION" >> $GITHUB_OUTPUT
+          echo "tag=v$VERSION" >> $GITHUB_OUTPUT
+          echo "Using version: $VERSION"
+      
+      - name: Copy bundles to releases repository
+        run: |
+          cp dist/assistos-sdk.mjs releases-repo/
+          cp dist/assistos-sdk.umd.js releases-repo/
+      
+      - name: Update package.json version in releases repo
+        run: |
+          cd releases-repo
+          if [ -f package.json ]; then
+            npm version ${{ steps.version.outputs.version }} --no-git-tag-version || echo '{"name": "assistos-sdk-releases", "version": "${{ steps.version.outputs.version }}"}' > package.json
+          else
+            echo '{"name": "assistos-sdk-releases", "version": "${{ steps.version.outputs.version }}"}' > package.json
+          fi
+      
+      - name: Commit and push to releases repository
+        run: |
+          cd releases-repo
+          git config user.name "GitHub Actions"
+          git config user.email "actions@github.com"
+          
+          git add assistos-sdk.mjs assistos-sdk.umd.js package.json
+          git commit -m "Release ${{ steps.version.outputs.tag }}" || echo "No changes to commit"
+          
+          git push origin main
+      
+      - name: Create GitHub Release
+        run: |
+          cd releases-repo
+          
+          # Create release notes
+          cat > release-notes.md << EOF
+          ## AssistOS SDK ${{ steps.version.outputs.tag }}
+          
+          ### Bundle Files
+          - \`assistos-sdk.mjs\` - ES Module format
+          - \`assistos-sdk.umd.js\` - UMD format
+          
+          ### Installation
+          
+          #### Via CDN (UMD)
+          \`\`\`html
+          <script src="https://github.com/AssistOS-AI/assistos-sdk-releases/releases/download/${{ steps.version.outputs.tag }}/assistos-sdk.umd.js"></script>
+          \`\`\`
+          
+          #### Via ES Module
+          \`\`\`javascript
+          import AssistOS from 'https://github.com/AssistOS-AI/assistos-sdk-releases/releases/download/${{ steps.version.outputs.tag }}/assistos-sdk.mjs';
+          \`\`\`
+          
+          ### Source
+          Built from: [${{ github.repository }}@${{ github.sha }}](https://github.com/${{ github.repository }}/commit/${{ github.sha }})
+          EOF
+          
+          # Create git tag
+          git tag -a ${{ steps.version.outputs.tag }} -m "Release ${{ steps.version.outputs.tag }}"
+          git push origin ${{ steps.version.outputs.tag }}
+          
+          # Create GitHub release with the bundles
+          gh release create ${{ steps.version.outputs.tag }} \
+            assistos-sdk.mjs \
+            assistos-sdk.umd.js \
+            --title "AssistOS SDK ${{ steps.version.outputs.tag }}" \
+            --notes-file release-notes.md \
+            --repo AssistOS-AI/assistos-sdk-releases
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
