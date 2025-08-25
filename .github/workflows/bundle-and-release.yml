@@ -29,12 +29,54 @@ jobs:
       - name: Build bundles
         run: npm run build
       
+      - name: Check if releases repository exists
+        id: check_repo
+        run: |
+          if gh repo view AssistOS-AI/assistos-sdk-releases &>/dev/null; then
+            echo "exists=true" >> $GITHUB_OUTPUT
+          else
+            echo "exists=false" >> $GITHUB_OUTPUT
+            echo "::warning::Repository AssistOS-AI/assistos-sdk-releases does not exist. Creating it..."
+          fi
+        env:
+          GITHUB_TOKEN: ${{ secrets.GIT_TOKEN }}
+      
+      - name: Create releases repository if it doesn't exist
+        if: steps.check_repo.outputs.exists == 'false'
+        run: |
+          gh repo create AssistOS-AI/assistos-sdk-releases --public --description "AssistOS SDK bundled releases" || true
+        env:
+          GITHUB_TOKEN: ${{ secrets.GIT_TOKEN }}
+      
       - name: Checkout releases repository
         uses: actions/checkout@v4
         with:
           repository: AssistOS-AI/assistos-sdk-releases
-          token: ${{ secrets.GITHUB_TOKEN }}
+          token: ${{ secrets.GIT_TOKEN }}
           path: releases-repo
+        continue-on-error: true
+      
+      - name: Initialize releases repository if empty
+        run: |
+          if [ ! -d "releases-repo/.git" ]; then
+            mkdir -p releases-repo
+            cd releases-repo
+            git init
+            git config user.name "GitHub Actions"
+            git config user.email "actions@github.com"
+            echo "# AssistOS SDK Releases" > README.md
+            echo "" >> README.md
+            echo "This repository contains the bundled releases of the AssistOS SDK." >> README.md
+            echo "" >> README.md
+            echo "## Latest Release" >> README.md
+            echo "" >> README.md
+            echo "- \`assistos-sdk.mjs\` - ES Module format" >> README.md
+            echo "- \`assistos-sdk.umd.js\` - UMD format" >> README.md
+            git add README.md
+            git commit -m "Initial commit"
+            git branch -M main
+            git remote add origin https://github.com/AssistOS-AI/assistos-sdk-releases.git
+          fi
       
       - name: Determine version
         id: version
@@ -81,10 +123,14 @@ jobs:
           git config user.name "GitHub Actions"
           git config user.email "actions@github.com"
           
+          # Ensure we're on the main branch
+          git checkout main 2>/dev/null || git checkout -b main
+          
           git add assistos-sdk.mjs assistos-sdk.umd.js package.json
           git commit -m "Release ${{ steps.version.outputs.tag }}" || echo "No changes to commit"
           
-          git push origin main
+          # Push with authentication
+          git push https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/AssistOS-AI/assistos-sdk-releases.git main
       
       - name: Create GitHub Release
         run: |
@@ -126,4 +172,4 @@ jobs:
             --notes-file release-notes.md \
             --repo AssistOS-AI/assistos-sdk-releases
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.GIT_TOKEN }}
