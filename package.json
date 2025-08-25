@@ -19,6 +19,7 @@
   },
   "homepage": "https://github.com/AssistOS-AI/assistos-sdk#readme",
   "devDependencies": {
+    "@originjs/vite-plugin-dynamic-import": "^1.5.0",
     "@rollup/plugin-commonjs": "^26.0.1",
     "vite": "^5.3.3"
   }
