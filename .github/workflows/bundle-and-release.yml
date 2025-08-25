@@ -1,6 +1,10 @@
 name: Bundle and Release SDK
 
 on:
+  push:
+    branches:
+      - main
+      - master
   workflow_dispatch:
     inputs:
       version:
