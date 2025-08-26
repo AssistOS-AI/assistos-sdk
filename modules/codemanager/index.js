@@ -52,6 +52,46 @@ async function getBackendPlugin(spaceId, appName, pluginName){
     const client = await this.getClient(constants.CODE_MANAGER_PLUGIN, spaceId);
     return await client.getBackendPlugin(appName, pluginName);
 }
+async function deleteBackendPlugin(spaceId, appName, pluginName){
+    const client = await this.getClient(constants.CODE_MANAGER_PLUGIN, spaceId);
+    return await client.getBackendPlugin(appName, pluginName);
+}
+async function deleteApp(spaceId, appName){
+    const client = await this.getClient(constants.CODE_MANAGER_PLUGIN, spaceId);
+    return await client.deleteApp(appName);
+}
+async function getAppRepoStatus(spaceId, appName){
+    const client = await this.getClient(constants.CODE_MANAGER_PLUGIN, spaceId);
+    return await client.getAppRepoStatus(appName);
+}
+async function commitAndPush(spaceId, appName, commitMessage){
+    const client = await this.getClient(constants.CODE_MANAGER_PLUGIN, spaceId);
+    return await client.commitAndPush(appName, commitMessage);
+}
+async function pullApp(spaceId, appName){
+    const client = await this.getClient(constants.CODE_MANAGER_PLUGIN, spaceId);
+    return await client.pullApp(appName);
+}
+async function listThemesForApp(spaceId, appName){
+    const client = await this.getClient(constants.CODE_MANAGER_PLUGIN, spaceId);
+    return await client.listThemesForApp(appName);
+}
+async function getTheme(spaceId, appName, themeName){
+    const client = await this.getClient(constants.CODE_MANAGER_PLUGIN, spaceId);
+    return await client.getTheme(appName, themeName);
+}
+async function saveTheme(spaceId, appName, themeName, content, newName){
+    const client = await this.getClient(constants.CODE_MANAGER_PLUGIN, spaceId);
+    return await client.saveTheme(appName, themeName, content, newName);
+}
+async function deleteTheme(spaceId, appName, themeName){
+    const client = await this.getClient(constants.CODE_MANAGER_PLUGIN, spaceId);
+    return await client.deleteTheme(appName, themeName);
+}
+async function updateAppManifest(spaceId, appName, data){
+    const client = await this.getClient(constants.CODE_MANAGER_PLUGIN, spaceId);
+    return await client.updateAppManifest(appName, data);
+}
 module.exports = {
     getClient,
     saveComponent,
@@ -64,5 +104,15 @@ module.exports = {
     getComponent,
     deleteComponent,
     saveBackendPlugin,
-    getBackendPlugin
+    getBackendPlugin,
+    deleteBackendPlugin,
+    deleteApp,
+    getAppRepoStatus,
+    commitAndPush,
+    pullApp,
+    listThemesForApp,
+    getTheme,
+    saveTheme,
+    deleteTheme,
+    updateAppManifest
 }
