@@ -30,7 +30,7 @@ export default defineConfig({
   ],
   build: {
     lib: {
-      entry: resolve(__dirname, 'index.js'),
+      entry: resolve(__dirname, 'index.mjs'),
       name: 'AssistOS',
       formats: ['es', 'umd'],
       fileName: (format) => format === 'es' ? 'assistos-sdk.mjs' : 'assistos-sdk.umd.js'
@@ -47,7 +47,9 @@ export default defineConfig({
           include: [/./],
           transformMixedEsModules: true,
           ignoreDynamicRequires: true,
-          requireReturnsDefault: 'auto'
+          requireReturnsDefault: 'namespace',
+          esmExternals: true,
+          defaultIsModuleExports: true
         }),
         nodeResolve({
           preferBuiltins: false,
@@ -72,7 +74,7 @@ export default defineConfig({
     preferBuiltins: false,
     alias: {
       'assistos': resolve(__dirname, 'index.js'),
-      './serverless': resolve(__dirname, 'modules/util/serverless/serverless-client.mjs')
+      './serverless/serverless-client': resolve(__dirname, 'modules/util/serverless/serverless-client.mjs')
     }
   }
 });

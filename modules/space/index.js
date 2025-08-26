@@ -1,5 +1,5 @@
-const {request} = require("../util");
-const {getAPIClient} = require("../util/utils");
+const { request } = require("../util");
+const { getAPIClient } = require("../util/utils");
 const constants = require("../../constants");
 
 async function getClient(pluginName, spaceId) {
@@ -30,7 +30,7 @@ async function saveSpaceChat(spaceId, chatId) {
 }
 
 async function createSpace(spaceName, email) {
-    return await this.sendRequest(`/spaces`, "POST", {spaceName, email});
+    return await this.sendRequest(`/spaces`, "POST", { spaceName, email });
 }
 
 async function getSpaceStatus(spaceId) {
@@ -43,15 +43,15 @@ async function deleteSpace(spaceId) {
 }
 
 async function deleteSecret(spaceId, secretKey) {
-    return await this.sendRequest(`/spaces/${spaceId}/secrets/delete`, "PUT", {secretKey});
+    return await this.sendRequest(`/spaces/${spaceId}/secrets/delete`, "PUT", { secretKey });
 }
 
 async function addSecret(spaceId, secretKey, value) {
-    return await this.sendRequest(`/spaces/${spaceId}/secrets`, "POST", {secretKey, value});
+    return await this.sendRequest(`/spaces/${spaceId}/secrets`, "POST", { secretKey, value });
 }
 
 async function editSecret(spaceId, secretKey, value) {
-    return await this.sendRequest(`/spaces/${spaceId}/secrets`, "PUT", {secretKey, value});
+    return await this.sendRequest(`/spaces/${spaceId}/secrets`, "PUT", { secretKey, value });
 }
 
 async function getSecretsMasked(spaceId) {
@@ -73,7 +73,7 @@ async function removeCollaborator(referrerEmail, spaceId, email) {
 async function addCollaborators(referrerEmail, spaceId, collaborators, spaceName) {
     let client = await this.getClient(constants.WORKSPACE_PLUGIN, spaceId);
     let userEmails = collaborators.map(user => user.email);
-    let userModule = require("assistos").loadModule("user", this.__securityContext);
+    let userModule = AssistOS.loadModule("user", this.__securityContext);
 
     const validEmails = [];
     for (let index = 0; index < userEmails.length; index++) {
@@ -116,7 +116,7 @@ async function getVideoURL(videoId) {
 }
 
 async function getFileURL(fileId, type) {
-    const downloadData = await this.sendRequest(`/spaces/downloads/${fileId}`, "GET", null, {"Content-Type": type});
+    const downloadData = await this.sendRequest(`/spaces/downloads/${fileId}`, "GET", null, { "Content-Type": type });
     return downloadData.downloadURL;
 }
 
@@ -133,7 +133,7 @@ async function getVideoHead(videoId) {
 }
 
 async function headFile(fileId, type) {
-    return await this.sendRequest(`/spaces/files/${fileId}`, "HEAD", null, {"Content-Type": type});
+    return await this.sendRequest(`/spaces/files/${fileId}`, "HEAD", null, { "Content-Type": type });
 }
 
 async function getAudio(audioId) {
@@ -149,7 +149,7 @@ async function getVideo(videoId, range) {
 }
 
 async function getFile(fileId, type, range) {
-    const downloadData = await this.sendRequest(`/spaces/downloads/${fileId}`, "GET", null, {"Content-Type": type});
+    const downloadData = await this.sendRequest(`/spaces/downloads/${fileId}`, "GET", null, { "Content-Type": type });
 
     let headers = {};
     if (range) {
@@ -171,7 +171,7 @@ async function putVideo(video) {
 }
 
 async function putFile(file, type) {
-    const uploadData = await this.sendRequest(`/spaces/uploads`, "GET", null, {"Content-Type": type});
+    const uploadData = await this.sendRequest(`/spaces/uploads`, "GET", null, { "Content-Type": type });
     await this.sendRequest(uploadData.uploadURL, "PUT", file, {
         "Content-Type": type,
         "Content-Length": file.byteLength
@@ -192,7 +192,7 @@ async function deleteVideo(videoId) {
 }
 
 async function deleteFile(fileId, type) {
-    return await this.sendRequest(`/spaces/files/${fileId}`, "DELETE", null, {"Content-Type": type});
+    return await this.sendRequest(`/spaces/files/${fileId}`, "DELETE", null, { "Content-Type": type });
 }
 
 async function startTelegramBot(spaceId, personalityId, botId) {
@@ -270,7 +270,7 @@ async function getMatchingSpaces(input) {
     let client = await this.getClient(constants.ASSISTOS_ADMIN_PLUGIN);
     let spaces = await client.getMatchingSpaces(input);
     let spacesDetails = [];
-    for(let space of spaces) {
+    for (let space of spaces) {
         let spaceClient = await this.getClient(constants.WORKSPACE_PLUGIN, space.id);
         let workspace = await spaceClient.getWorkspaceInfo(space.id);
         workspace.name = space.name;
@@ -291,15 +291,15 @@ async function getSpaces(offset, limit) {
     }
     return spacesDetails;
 }
-async function getSpacesCount(){
+async function getSpacesCount() {
     let client = await this.getClient(constants.ASSISTOS_ADMIN_PLUGIN);
     return await client.getSpacesCount();
 }
-async function getAllDocumentsCount(){
+async function getAllDocumentsCount() {
     let client = await this.getClient(constants.ASSISTOS_ADMIN_PLUGIN);
     let spaceIds = await client.listAllSpaces();
     let documentsCount = 0;
-    for(let spaceId of spaceIds){
+    for (let spaceId of spaceIds) {
         let spaceClient = await this.getClient(constants.DOCUMENTS_PLUGIN, spaceId);
         let documents = await spaceClient.getAllDocuments();
         documentsCount += documents.length;

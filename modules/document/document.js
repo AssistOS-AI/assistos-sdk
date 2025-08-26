@@ -1,7 +1,7 @@
 const request = require("../util").request;
-const envType = require("assistos").envType;
+const envType = AssistOS.envType;
 const constants = require("../../constants");
-const {getAPIClient} = require("../util/utils");
+const { getAPIClient } = require("../util/utils");
 async function getClient(pluginName, spaceId) {
     return await getAPIClient(this.__securityContext.userId, pluginName, spaceId, {
         email: this.__securityContext.email
@@ -13,7 +13,7 @@ async function sendRequest(url, method, data) {
 }
 
 async function exportDocument(spaceId, documentId, exportType) {
-    return await this.sendRequest(`/documents/export/${spaceId}/${documentId}`, "POST", {exportType});
+    return await this.sendRequest(`/documents/export/${spaceId}/${documentId}`, "POST", { exportType });
 }
 
 async function exportDocumentAsDocx(spaceId, documentId) {
@@ -40,7 +40,7 @@ async function getDocuments(spaceId) {
 }
 
 async function addDocument(spaceId, title, category) {
-    function createDocId(title){
+    function createDocId(title) {
         return title.replace(/[^a-zA-Z0-9_]/g, "_");
     }
     let client = await this.getClient(constants.DOCUMENTS_PLUGIN, spaceId);
@@ -60,7 +60,7 @@ async function convertDocument(formData) {
 
         if (envType === constants.ENV_TYPE.NODE) {
             url = `${constants[constants.ENVIRONMENT_MODE]}${url}`;
-            init.headers = {Cookie: this.__securityContext.cookies};
+            init.headers = { Cookie: this.__securityContext.cookies };
         }
 
         const response = await fetch(url, init);
@@ -111,7 +111,7 @@ async function getDocumentTasks(spaceId, documentId) {
 }
 
 async function translateDocument(spaceId, documentId, language, personalityId) {
-    return await this.sendRequest(`/tasks/translate/${spaceId}/${documentId}`, "POST", {language, personalityId});
+    return await this.sendRequest(`/tasks/translate/${spaceId}/${documentId}`, "POST", { language, personalityId });
 }
 
 async function undoOperation(spaceId, documentId) {

@@ -1,5 +1,5 @@
-const {request} = require("../util");
-const {getAPIClient} = require("../util/utils");
+const { request } = require("../util");
+const { getAPIClient } = require("../util/utils");
 const constants = require("../../constants");
 
 async function sendRequest(url, method, data, headers) {
@@ -43,7 +43,7 @@ async function listUserSpaces(email) {
 async function getUserProfileImage(email) {
     email = encodeURIComponent(email);
     let userInfo = await this.sendRequest(`/auth/getInfo?email=${email}`, "GET");
-    let spaceModule = require("assistos").loadModule("space", this.__securityContext);
+    let spaceModule = AssistOS.loadModule("space", this.__securityContext);
     return await spaceModule.getImage(userInfo.imageId);
 }
 
@@ -70,19 +70,19 @@ async function createGuestUser() {
 }
 
 async function emailLogin(email, code) {
-    return await this.sendRequest(`/auth/loginWithEmailCode`, 'POST', {email, code});
+    return await this.sendRequest(`/auth/loginWithEmailCode`, 'POST', { email, code });
 }
 
 async function passkeyLogin(email, assertion, challengeKey) {
-    return await this.sendRequest(`/auth/loginWithPasskey`, 'POST', {email, assertion, challengeKey});
+    return await this.sendRequest(`/auth/loginWithPasskey`, 'POST', { email, assertion, challengeKey });
 }
 
 async function totpLogin(email, code) {
-    return await this.sendRequest(`/auth/loginWithTotp`, 'POST', {email, token: code});
+    return await this.sendRequest(`/auth/loginWithTotp`, 'POST', { email, token: code });
 }
 
 async function generateAuthCode(email, name, refererId) {
-    return await this.sendRequest(`/auth/sendCodeByEmail`, "POST", {email, name, refererId});
+    return await this.sendRequest(`/auth/sendCodeByEmail`, "POST", { email, name, refererId });
 }
 
 async function setupTotp() {
@@ -128,7 +128,7 @@ async function getUserLogs(email) {
     let client = await this.getClient(constants.USER_LOGGER_PLUGIN);
     return await client.getUserLogs(email);
 }
-async function getUsers(offset , limit) {
+async function getUsers(offset, limit) {
     let client = await this.getClient(constants.ADMIN_PLUGIN);
     return await client.getUsers(offset, limit);
 }

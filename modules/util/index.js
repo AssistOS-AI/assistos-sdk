@@ -19,8 +19,8 @@ async function request(url, method = "GET", data, securityContext, headers = {},
         headers: headers
     };
     if (method === "POST" || method === "PUT") {
-        if (data instanceof FormData || typeof data === "function" || data instanceof ArrayBuffer || Buffer.isBuffer(data) || data instanceof Uint8Array) {
-            /* let the browser decide the content type */
+        /* let the browser decide the content type */
+        if (data instanceof FormData || typeof data === "function" || data instanceof ArrayBuffer || (typeof Buffer !== 'undefined' && Buffer.isBuffer(data)) || data instanceof Uint8Array) {
             init.body = data;
         } else if (typeof data === "string") {
             init.body = data;
