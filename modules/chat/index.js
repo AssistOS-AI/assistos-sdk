@@ -94,6 +94,10 @@ async function getComponentsForChatRoomInstance(spaceId, chatId){
     let client = await this.getClient(CHAT_ROOM_PLUGIN, spaceId);
     return await client.getComponentsForChatRoomInstance(chatId);
 }
+async function setChatUIContext(spaceId, chatId, context){
+    let client = await this.getClient(CHAT_ROOM_PLUGIN, spaceId);
+    return await client.setChatUIContext(chatId, context);
+}
 module.exports = {
     getChat,
     getChats,
@@ -114,5 +118,6 @@ module.exports = {
     deleteChatScript,
     getDefaultChatScript,
     getComponentsForChatRoomInstance,
-    getChatScriptNamesByRole
+    getChatScriptNamesByRole,
+    setChatUIContext
 };
