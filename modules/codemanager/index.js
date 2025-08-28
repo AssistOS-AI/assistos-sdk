@@ -92,6 +92,10 @@ async function updateAppManifest(spaceId, appName, data){
     const client = await this.getClient(constants.CODE_MANAGER_PLUGIN, spaceId);
     return await client.updateAppManifest(appName, data);
 }
+async function changeAppTheme(spaceId, appName, themeName){
+    const client = await this.getClient(constants.CODE_MANAGER_PLUGIN, spaceId);
+    return await client.changeAppTheme(appName, themeName);
+}
 module.exports = {
     getClient,
     saveComponent,
@@ -114,5 +118,6 @@ module.exports = {
     getTheme,
     saveTheme,
     deleteTheme,
-    updateAppManifest
+    updateAppManifest,
+    changeAppTheme
 }
