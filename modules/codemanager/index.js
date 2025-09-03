@@ -98,6 +98,10 @@ async function changeAppTheme(spaceId, appName, themeName){
 }
 
 /*Chat scripts*/
+async function listChatScriptsForApp(spaceId, appName) {
+    let client = await this.getClient(constants.CODE_MANAGER_PLUGIN, spaceId);
+    return await client.listChatScriptsForApp(appName);
+}
 async function listChatScripts(spaceId) {
     let client = await this.getClient(constants.CODE_MANAGER_PLUGIN, spaceId);
     return await client.listChatScripts();
@@ -146,5 +150,6 @@ module.exports = {
     getChatScript,
     saveChatScript,
     deleteChatScript,
-    getChatScriptNamesByRole
+    getChatScriptNamesByRole,
+    listChatScriptsForApp
 }
