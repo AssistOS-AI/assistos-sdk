@@ -96,6 +96,28 @@ async function changeAppTheme(spaceId, appName, themeName){
     const client = await this.getClient(constants.CODE_MANAGER_PLUGIN, spaceId);
     return await client.changeAppTheme(appName, themeName);
 }
+
+/*Chat scripts*/
+async function listChatScripts(spaceId) {
+    let client = await this.getClient(constants.CODE_MANAGER_PLUGIN, spaceId);
+    return await client.listChatScripts();
+}
+async function getChatScript(spaceId, appName, name) {
+    let client = await this.getClient(constants.CODE_MANAGER_PLUGIN, spaceId);
+    return await client.getChatScript(appName, name);
+}
+async function saveChatScript(spaceId, appName, scriptName, code, newName) {
+    let client = await this.getClient(constants.CODE_MANAGER_PLUGIN, spaceId);
+    return await client.saveChatScript(appName, scriptName, code, newName);
+}
+async function deleteChatScript(spaceId, appName, scriptName) {
+    let client = await this.getClient(constants.CODE_MANAGER_PLUGIN, spaceId);
+    return await client.deleteChatScript(appName, scriptName);
+}
+async function getChatScriptNamesByRole(spaceId) {
+    let client = await this.getClient(constants.CODE_MANAGER_PLUGIN, spaceId);
+    return await client.getChatScriptNamesByRole();
+}
 module.exports = {
     getClient,
     saveComponent,
@@ -119,5 +141,10 @@ module.exports = {
     saveTheme,
     deleteTheme,
     updateAppManifest,
-    changeAppTheme
+    changeAppTheme,
+    listChatScripts,
+    getChatScript,
+    saveChatScript,
+    deleteChatScript,
+    getChatScriptNamesByRole
 }

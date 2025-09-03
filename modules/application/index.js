@@ -16,7 +16,15 @@ async function sendRequest(url, method, data) {
 }
 async function installSystemApp(appName){
     let client = await this.getClient(constants.ASSISTOS_ADMIN_PLUGIN);
-    return await client.installSystemApp(appName);
+    await client.installSystemApp(appName);
+    // const promises = [];
+    // const manifest = await client.getApplicationManifest(appName);
+    // if (manifest.secrets) {
+    //     for (let secret of manifest.secrets) {
+    //         promises.push(addSecret.call(this, spaceId, secret, ""));
+    //     }
+    // }
+    // return await Promise.all(promises);
 }
 async function updateSystemApp(appName) {
     let client = await this.getClient(constants.ASSISTOS_ADMIN_PLUGIN);
@@ -27,15 +35,14 @@ async function requiresUpdateSystemApp(appName) {
     return await client.requiresUpdate(appName);
 }
 
-async function installApplication(spaceId, applicationId) {
+async function installApplication(spaceId, appName) {
     let client = await this.getClient(constants.APPLICATION_PLUGIN, spaceId);
-    const appInstallationStatus = await client.installApplication(applicationId);
-    const applicationManifest = await client.getApplicationManifest(applicationId);
+    const appInstallationStatus = await client.installApplication(appName);
+    const manifest = await client.getApplicationManifest(appName);
     const promises = [];
-    if (applicationManifest?.secrets && Array.isArray(applicationManifest.secrets)) {
-        for (let i = 0; i < applicationManifest.secrets.length; i++) {
-            const secret = applicationManifest.secrets[i];
-            promises.push(addSecret.call(this,spaceId,secret.provider, secret.keyName, ""));
+    if (manifest.secrets) {
+        for (let secret of manifest.secrets) {
+            promises.push(addSecret.call(this, spaceId, secret, ""));
         }
     }
     return await Promise.all(promises);
@@ -88,11 +95,6 @@ async function getApplicationFile(spaceId, applicationId, relativeAppFilePath) {
     }
 }
 
-async function getApplicationTasks(spaceId, applicationId) {
-    let client = await this.getClient(constants.APPLICATION_PLUGIN, spaceId);
-    return await client.getApplicationTasks(applicationId);
-}
-
 async function getApplicationsPlugins(spaceId) {
     let client = await this.getClient(constants.APPLICATION_PLUGIN, spaceId);
     return await client.getApplicationsPlugins();
@@ -108,7 +110,6 @@ module.exports = {
     sendRequest,
     updateApplication,
     requiresUpdate,
-    getApplicationTasks,
     getApplicationsPlugins,
     getApplications,
     installSystemApp,
